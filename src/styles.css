@@ -31,7 +31,54 @@
 
 /* ========================================================== */
 
+ul {
+  padding: 0;
+}
+
 
 .no-bullet {
   list-style-type: none;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.project-list {
+  grid-column: 2;
+  padding: 3rem;
+}
+
+.project-container {
+  padding: 2rem;
+}
+
+.todo-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #121212;
+}
+
+.sidebar-container {
+  padding: 1rem;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.user-profile {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+
+.user-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: rgb(112, 112, 150);
+  display: inline-block;
 }

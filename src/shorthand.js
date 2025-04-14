@@ -67,25 +67,31 @@ export const h3 = (text, classlist) => document.createElement("h3").setText(text
  * @param {string[]} items 
  * @returns 
  */
-export const ul = (...items) => {
-    const elem = document.createElement("ul");
-    const children = Array.from(items, item => {
-        let element = document.createElement("li");
-        if (typeof item === "string") {
-            element.textContent = item;
-        } else {
-            element.appendChild(item);
-        }
-        element.classList.add("no-bullet");
+export const ul = (classList, ...items) => {
 
-        return element;
-    });
+    items = items.flat();
+    const elem = document.createElement("ul");
+    const children = Array.from(items, item => parseLi(item));
 
     elem.append(...children);
+    elem.addClass(classList);
 
     return elem;
+
 };
 
-// const ng = [ div , p, ul, h3];
-// x = {...ng};
-// export { div , p, ul, h3 }
+export const parseLi = function(item) {
+    let element = document.createElement("li");
+    if (typeof item === "string") {
+        element.textContent = item;
+    } else {
+        if (item.render === undefined) {
+            element.appendChild(item);
+        } else {
+            element.appendChild(item.render())
+        }
+    }
+    // element.classList.add("no-bullet");
+
+    return element;
+}
