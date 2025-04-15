@@ -37,6 +37,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
 }
 
 ul {
@@ -121,7 +122,10 @@ ul {
   grid-template-rows: 1fr 2fr 1fr;
   max-width: 800px;
   /* flex-direction: column; */
-  border: 1px solid #121212;
+  margin: 1rem;
+  background-color: #ffffc9;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .todo > .title {
@@ -143,6 +147,11 @@ ul {
 .todo-tray {
   grid-column: 1 / 3;
   grid-row: 3;
+  justify-content: center;
+  align-items: center;
+  /* justify-self: center; */
+  align-self: center;
+  /* margin-left: 1rem; */
 }
 
 .todo-tray > ul {
@@ -150,5 +159,35 @@ ul {
 }
 
 .todo-tray li {
-  margin: 0 3rem;
+  margin: 0 1rem;
+}
+
+.todo-high-priority {
+  border-right: 9px solid #ff2f2f;
+}
+
+.todo-medium-priority {
+  border-right: 9px solid #fdc64e;
+}
+
+.todo-low-priority {
+  border-right: 9px solid #a9e7ff;
+}
+
+.high-priority {
+  background-color: maroon;
+  color: tomato;
+  padding: 0.1rem 0.5rem;
+}
+
+.medium-priority {
+  background-color: orange;
+  color: yellow;
+  padding: 0.1rem 0.5rem;
+}
+
+.low-priority {
+  background-color: blue;
+  color: lightblue;
+  padding: 0.1rem 0.5rem;
 }

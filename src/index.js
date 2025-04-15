@@ -9,8 +9,8 @@ import { Renderable } from "./renderable";
 
 const todos = [
     new Todo("Order a Burger", "Order a burger at Nando's for lunch", new Intl.DateTimeFormat('en-GB').format(new Date(2025, 3, 15)), "high", "", ["Go to Nando's", "Order burger", "Have lunch"]), 
-    new Todo("title", "description", "dueDate", "priority", "notes", "checklist"),
-    new Todo("title", "description", "dueDate", "priority", "notes", "checklist"),
+    new Todo("title", "description", "dueDate", "medium", "notes", "checklist"),
+    new Todo("title", "description", "dueDate", "low", "notes", "checklist"),
 ];
 
 const project = new Project("My Project", todos);
