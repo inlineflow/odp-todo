@@ -1,5 +1,5 @@
 import { Renderable } from "./renderable";
-import { div } from "./shorthand";
+import { div, section } from "./shorthand";
 
 export class ProjectList extends Renderable {
     constructor(...projects) {
@@ -7,6 +7,6 @@ export class ProjectList extends Renderable {
     }
 
     toHtml() {
-        return div("project-list")
+        return section("project-list")
     }
 }

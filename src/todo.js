@@ -1,5 +1,5 @@
 import { Renderable } from "./renderable";
-import { div , p, h3, ul } from "./shorthand";
+import { div , p, h3, ul, h2, h4 } from "./shorthand";
 
 /**
  * @typedef {Object} Todo
@@ -25,14 +25,13 @@ export class Todo extends Renderable {
 
     toHtml() {
         const elem = 
-        div("todo-item").append(
-            h3(this.title),
-            div("todo-container").append(
-                p(this.description, ["todo-item-description"]),
-                ul("no-bullet", this.notes),
+        div("todo").append(
+            h4(this.title, "title"),
+            div("todo-description").append(
+                p(this.description),
         ),
-        div("todo-item-checklist").append(ul(this.checklist)),
-            div("todo-item-tray").append(
+        div("todo-checklist").append(ul("no-bullet", this.checklist)),
+            div("todo-tray").append(
             ul("no-bullet",
                 p(this.dueDate),
                 p(this.priority),

@@ -1,4 +1,4 @@
-import { div, parseLi, ul } from "./shorthand";
+import { div, h3, parseLi, ul } from "./shorthand";
 
 function addChildren(...items) {
     if (this.children === undefined) return;
@@ -41,25 +41,36 @@ export class Renderable {
 }
 
 export class ContainedList extends Renderable {
-    constructor(elements, title) {
-        super(ul("no-bullet", elements));
+    constructor(elements, title, mainClass, ulClass) {
+        super();
         this.title = title;
+        this.ul = ul(["no-bullet", "contained-list"], elements);
+        this.classlist = mainClass;
+        if (ulClass !== undefined) 
+            this.ul.addClass(ulClass);
     }
 
-    // ul = ul();
+    render = function () {
+        if (this.toHtml !== undefined)
+            return this.toHtml().append(this.ul);
+    }
 
-    append = function(...items) {
-        for (i of items) {
+    append = function (...items) {
+        for (let i of items) {
             this.ul.append(
                 parseLi(i),
             );
         };
 
-        return this.ul;
+        return this;
     }
 
+    addClass = classlist => this.ul.addClass(classlist);
+
     toHtml() {
-        return div('contained-list-container');
+        return div(this.classlist).append(
+            h3(this.title)
+        );
     }
 }
 

@@ -1,17 +1,14 @@
-import { Renderable } from "./renderable";
-import { div, ul } from "./shorthand";
+import { ContainedList, Renderable } from "./renderable";
+import { div, section, ul } from "./shorthand";
 
 
-export class Sidebar extends Renderable {
+export class Sidebar extends ContainedList {
     constructor(...navItems) {
-        super();
-        this.navItems = navItems;
+        super(navItems);
+        // this.navItems = navItems;
     }
 
     toHtml() {
-        return ul(
-            "no-bullet",
-            this.navItems,
-        );
+        return section("sidebar");
     }
 }
