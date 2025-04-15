@@ -124,7 +124,7 @@ ul {
   /* flex-direction: column; */
   margin: 1rem;
   background-color: #ffffc9;
-  padding: 1rem;
+  /* padding: 1rem; */
   border-radius: 8px;
 }
 
@@ -141,7 +141,9 @@ ul {
 
 .todo-checklist {
   grid-column: 2;
-  grid-row: 2 / 3;
+  grid-row: 1 / 4;
+  border-left: 5px solid black;
+  padding: 1rem;
 }
 
 .todo-tray {
@@ -176,18 +178,18 @@ ul {
 
 .high-priority {
   background-color: maroon;
-  color: tomato;
+  color: rgb(255, 202, 193);
   padding: 0.1rem 0.5rem;
 }
 
 .medium-priority {
-  background-color: orange;
+  background-color: rgb(228, 158, 28);
   color: yellow;
   padding: 0.1rem 0.5rem;
 }
 
 .low-priority {
-  background-color: blue;
-  color: lightblue;
+  background-color: rgb(115, 115, 236);
+  color: rgb(208, 243, 255);
   padding: 0.1rem 0.5rem;
 }

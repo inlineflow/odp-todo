@@ -29,10 +29,10 @@ export class Todo extends Renderable {
         this.checklist = checklist;
     }
 
+    formatter = new Intl.DateTimeFormat('en-GB');
+
     toHtml() {
         const priorityClass = `${this.priority}-priority`;
-
-
         const elem = 
         div("todo").append(
             h4(this.title, "title"),
@@ -42,7 +42,7 @@ export class Todo extends Renderable {
         div("todo-checklist").append(ul("no-bullet", this.checklist)),
             div("todo-tray").append(
             ul("no-bullet",
-                p(this.dueDate),
+                p(this.formatter.format(this.dueDate)),
                 p("priority: ").append(
                     span(this.priority).addClass(priorityClass),
                 ),

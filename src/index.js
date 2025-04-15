@@ -7,20 +7,6 @@ import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { Renderable } from "./renderable";
 
-const todos = [
-    new Todo("Order a Burger", "Order a burger at Nando's for lunch", new Intl.DateTimeFormat('en-GB').format(new Date(2025, 3, 15)), "high", "", ["Go to Nando's", "Order burger", "Have lunch"]), 
-    new Todo("title", "description", "dueDate", "medium", "notes", "checklist"),
-    new Todo("title", "description", "dueDate", "low", "notes", "checklist"),
-];
-
-const project = new Project("My Project", todos);
-
-const todos2 = [
-    new Todo("MyTodo", "description", "dueDate", "priority", "notes", "checklist"), 
-    new Todo("MyTodo", "description", "dueDate", "priority", "notes", "checklist"),
-    new Todo("MyTodo", "description", "dueDate", "priority", "notes", "checklist"),
-];
-
 class App extends Renderable {
     constructor() {
         super();
@@ -34,6 +20,21 @@ class App extends Renderable {
 
     toHtml = () => div("app");
 }
+
+const todos = [
+    new Todo("Order a Burger", "Order a burger at Nando's for lunch", new Date(2025, 3, 15), "high", "", ["Go to Nando's", "Order burger", "Have lunch"]), 
+    new Todo("title", "description", new Date(2025, 3, 15), "medium", "notes", "checklist"),
+    new Todo("title", "description", new Date(2025, 3, 15), "low", "notes", "checklist"),
+];
+
+const project = new Project("My Project", todos);
+
+const todos2 = [
+    new Todo("MyTodo", "description", new Date(2025, 3, 15), "low", "notes", "checklist"), 
+    new Todo("MyTodo", "description", new Date(2025, 3, 15), "high", "notes", "checklist"),
+    new Todo("MyTodo", "description", new Date(2025, 3, 15), "medium", "notes", "checklist"),
+];
+
 
 const project2 = new Project("My Project2", todos2);
 const pList = new ProjectList(project, project2);
