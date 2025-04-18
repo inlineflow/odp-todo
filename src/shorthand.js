@@ -15,7 +15,8 @@ Element.prototype.addClass = function (classList) {
     if (classList.constructor === Array) {
         this.classList.add(...classList)
     } else {
-        this.classList.add(classList)
+        const list = classList.split(" ");
+        this.classList.add(...list)
     }
 
     return this;
@@ -25,6 +26,23 @@ Element.prototype.setText = function (text) {
     if (text === undefined || text === "") return this;
 
     this.textContent = text;
+    return this;
+}
+
+Element.prototype.setAttr = function(name, value) {
+    if (name === undefined || value === undefined) 
+        return this;
+
+    this.setAttribute(name, value);
+    return this;
+}
+
+Element.prototype.siHTML = function(html) {
+    if (html === undefined) {
+        return this;
+    }
+
+    this.innerHTML = html;
     return this;
 }
 
@@ -63,7 +81,8 @@ export const span = (text, classList) => document.createElement("span").setText(
 export const h4 = (text, classlist) => document.createElement("h4").setText(text).addClass(classlist);
 export const h3 = (text, classlist) => document.createElement("h3").setText(text).addClass(classlist);
 export const h2 = (text, classlist) => document.createElement("h2").setText(text).addClass(classlist);
-
+export const btn = (inner, classlist) => document.createElement("button").siHTML(inner).setAttr("type", "button").addClass(classlist);
+export const icon = (svgString, classlist) => div(classlist).siHTML(svgString);
 
 /**
  * 

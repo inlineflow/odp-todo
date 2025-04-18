@@ -1,5 +1,10 @@
 import { Renderable } from "./renderable";
-import { div , p, h3, ul, h2, h4, span } from "./shorthand";
+import { div , p, h3, ul, h2, h4, span, icon } from "./shorthand";
+import pencilIcon from "../assets/icons/pencil.svg"
+import noteIcon from "../assets/icons/note.svg"
+import commentIcon from "../assets/icons/comment.svg"
+import refreshIcon from "../assets/icons/refresh.svg"
+import { formatDistance } from 'date-fns'
 
 /**
  * @typedef {Object} Todo
@@ -22,36 +27,34 @@ export class Todo extends Renderable {
     constructor(title, description, dueDate, priority, notes, checklist) {
         super();
         this.title = title;
-        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
-        this.checklist = checklist;
     }
 
-    formatter = new Intl.DateTimeFormat('en-GB');
+    // formatter = //new Intl.DateTimeFormat('en-GB');
+
 
     toHtml() {
         const priorityClass = `${this.priority}-priority`;
         const elem = 
         div("todo").append(
-            h4(this.title, "title"),
-            div("todo-description").append(
-                p(this.description),
+        div("todo-first-row").append(
+            h4(this.title, "title baskerville"),
+            div("todo-icon-tray").append(
+                icon(pencilIcon),
+                icon(noteIcon),
+                icon(commentIcon, "comment-icon"),
+            )
         ),
-        div("todo-checklist").append(ul("no-bullet", this.checklist)),
             div("todo-tray").append(
-            ul("no-bullet",
-                p(this.formatter.format(this.dueDate)),
-                p("priority: ").append(
-                    span(this.priority).addClass(priorityClass),
-                ),
-            ) 
+                icon(refreshIcon, "icon-container"),
+                p(formatDistance(this.dueDate, new Date()), "brawler"), // TODO: Translate to natural language
             )
         )
 
-        const todoPriorityClass = `todo-${this.priority}-priority`;
-        elem.addClass(todoPriorityClass);
+        // const todoPriorityClass = `todo-${this.priority}-priority`;
+        // elem.addClass(todoPriorityClass);
 
         return elem;
     }

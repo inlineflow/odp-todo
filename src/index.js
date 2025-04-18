@@ -6,6 +6,7 @@ import { ProjectList } from "./project-list";
 import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { Renderable } from "./renderable";
+import { AddTodo } from "./btn-addTodo";
 
 class App extends Renderable {
     constructor() {
@@ -22,10 +23,15 @@ class App extends Renderable {
 }
 
 const todos = [
-    new Todo("Order a Burger", "Order a burger at Nando's for lunch", new Date(2025, 3, 15), "high", "", ["Go to Nando's", "Order burger", "Have lunch"]), 
+    new Todo("Order a Burger", "Order a burger at Nando's for lunch", 
+        // "7:30"
+        new Date(2025, 3, 15)
+        , "high", "", ["Go to Nando's", "Order burger", "Have lunch"]), 
     new Todo("title", "description", new Date(2025, 3, 15), "medium", "notes", "checklist"),
     new Todo("title", "description", new Date(2025, 3, 15), "low", "notes", "checklist"),
 ];
+
+todos.push(new AddTodo());
 
 const project = new Project("My Project", todos);
 

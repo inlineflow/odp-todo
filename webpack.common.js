@@ -24,8 +24,19 @@ module.exports = {
                 loader: "html-loader",
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+                test: /\.svg$/i,
+                loader: 'svg-inline-loader',
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|webp)$/i,
                 type: "asset/resource",
+            },
+            {
+                test: /\.(woff|woff2|ttf|eot|otf)$/i,
+                type: "asset/resource",
+                generator: {
+                filename: 'assets/fonts/[name][ext][query]',
+                },
             },
         ],
     },
