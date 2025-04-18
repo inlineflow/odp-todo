@@ -5,11 +5,9 @@ import { Renderable } from "./renderable";
 export class AddTodo extends Renderable {
     constructor() {
         super();
-        this.button = btn(
-            "",
-              "btn-add-todo").append(
-                p("Add task"),
+        this.button = btn( "btn-add-todo").append(
                 icon(plusIcon, "icon-container"),
+                p("Add task"),
               );
 
         // this.icon = icon(plusIcon, "icon-container");

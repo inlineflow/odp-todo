@@ -1,5 +1,6 @@
 import { Renderable } from "./renderable";
 import { div , p, h3, ul, h2, h4, span, icon } from "./shorthand";
+import circleIcon from "../assets/icons/circle.svg"
 import pencilIcon from "../assets/icons/pencil.svg"
 import noteIcon from "../assets/icons/note.svg"
 import commentIcon from "../assets/icons/comment.svg"
@@ -64,7 +65,10 @@ export class Todo extends Renderable {
         const elem = 
         div("todo").append(
         div("todo-first-row").append(
+            div("cont").append(
+            icon(circleIcon, "circle-icon" + " " + priorityClass),
             h4(this.title, "title baskerville"),
+            ),
             div("todo-icon-tray").append(
                 icon(pencilIcon),
                 icon(noteIcon),
@@ -76,9 +80,6 @@ export class Todo extends Renderable {
                 p(formatDistance(this.dueDate, new Date()), "brawler"), // TODO: Translate to natural language
             )
         )
-
-        // const todoPriorityClass = `todo-${this.priority}-priority`;
-        // elem.addClass(todoPriorityClass);
 
         return elem;
     }

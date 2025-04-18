@@ -7,6 +7,15 @@ Element.prototype.append = function (...items) {
     return this;
 }
 
+Element.prototype.__prepend = Element.prototype.prepend;
+Element.prototype.prepend = function(...items) {
+    if (items === undefined) return this;
+
+        this.__prepend(...items);
+
+    return this;
+}
+
 Element.prototype.addClass = function (classList) {
     if (classList === undefined) {
         return this;
@@ -81,7 +90,7 @@ export const span = (text, classList) => document.createElement("span").setText(
 export const h4 = (text, classlist) => document.createElement("h4").setText(text).addClass(classlist);
 export const h3 = (text, classlist) => document.createElement("h3").setText(text).addClass(classlist);
 export const h2 = (text, classlist) => document.createElement("h2").setText(text).addClass(classlist);
-export const btn = (inner, classlist) => document.createElement("button").siHTML(inner).setAttr("type", "button").addClass(classlist);
+export const btn = (classlist) => document.createElement("button").setAttr("type", "button").addClass(classlist);
 export const icon = (svgString, classlist) => div(classlist).siHTML(svgString);
 
 /**

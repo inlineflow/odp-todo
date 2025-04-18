@@ -6,7 +6,6 @@ import { ProjectList } from "./project-list";
 import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { Renderable } from "./renderable";
-import { AddTodo } from "./btn-addTodo";
 import { formatDistance } from "date-fns";
 
 class App extends Renderable {
@@ -34,7 +33,7 @@ const todos = [
     new Todo("title",  new Date(2025, 3, 15), "low", "notes"),
 ];
 
-todos.push(new AddTodo());
+// todos.push(new AddTodo());
 
 const project = new Project("My Project", todos);
 
@@ -46,14 +45,14 @@ const todos2 = [
 
 
 const project2 = new Project("My Project2", todos2);
-const pList = new ProjectList(project, project2);
+const pList = new ProjectList("Today", project, project2);
 const app = new App();
 const sidebar = new Sidebar(
-    new UserProfile("Morris"),
-    "123",
-    "abc",
-    "I love Jesus",
-).append("xyz");
+        new UserProfile("Morris"),
+        "My Projects",
+        "Today",
+        "Upcoming",
+);
 
 app.addChildren(sidebar, pList);
 app.render();

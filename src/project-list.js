@@ -1,12 +1,15 @@
 import { Renderable } from "./renderable";
-import { div, section } from "./shorthand";
+import { div, h2, h3, section } from "./shorthand";
 
 export class ProjectList extends Renderable {
-    constructor(...projects) {
+    constructor(title, ...projects) {
         super(projects);
+        this.title = title;
     }
 
     toHtml() {
-        return section("project-list")
+        return section("project-list").append(
+            h2(this.title, "project-list-title"),
+        )
     }
 }
