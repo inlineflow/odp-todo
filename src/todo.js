@@ -9,12 +9,36 @@ import { formatDistance } from 'date-fns'
 /**
  * @typedef {Object} Todo
  * @property {string} title
- * @property {string} description
  * @property {Date} dueDate
  * @property {"low" | "medium" | "high"} priority
  * @property {string[]} notes
- * @property {string[]} checklist
  */
+
+/**
+ * @typedef {Object} DateFormatter
+ * @property {(targetDate: Date) => string} format - returns the ETA until the targetDate. the date for comparison is based on the specific formatter provided
+ */
+
+export class TodoFactory {
+    /**
+     * @param {DateFormatter} formatter - an object for formatting the date, has to have format
+     */
+    constructor(formatter) {
+        this.formatter = formatter;
+    }
+
+
+    /**
+     * @param {string} title
+     * @param {string} description
+     * @param {Date} dueDate
+     * @param {"low" | "medium" | "high"} priority
+     * @param {string[]} notes
+     * @param {string[]} checklist
+     */
+    new = (...args) => new Todo(...args, this.formatter);
+}
+
 export class Todo extends Renderable {
     /**
      * @param {string} title
@@ -24,7 +48,7 @@ export class Todo extends Renderable {
      * @param {string[]} notes
      * @param {string[]} checklist
      */
-    constructor(title, description, dueDate, priority, notes, checklist) {
+    constructor(title, dueDate, priority, notes) {
         super();
         this.title = title;
         this.dueDate = dueDate;
