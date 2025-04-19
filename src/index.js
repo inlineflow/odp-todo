@@ -54,5 +54,7 @@ const sidebar = new Sidebar(
         "Upcoming",
 );
 
+// const modal = document.createElement("dialog");
+
 app.addChildren(sidebar, pList);
 app.render();

@@ -291,8 +291,8 @@ ul {
 }
 
 .todo-icon-tray div:not(.comment-icon) {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
 
 .todo-description {
@@ -451,4 +451,11 @@ ul {
   font-family: 'Sansita';
   font-weight: bold;
   font-size: 26pt;
+}
+
+.btn-complete-todo {
+	padding: 0;
+	background: none;
+	border: none;
+	cursor: pointer;
 }

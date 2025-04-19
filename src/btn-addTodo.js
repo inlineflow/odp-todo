@@ -8,7 +8,15 @@ export class AddTodo extends Renderable {
         this.button = btn( "btn-add-todo").append(
                 icon(plusIcon, "icon-container"),
                 p("Add task"),
-              );
+        );
+        
+        this.button.addEventListener("click", function(e) {
+            const ev = new CustomEvent("add-todo", {
+                bubbles: true,
+            });
+
+            this.dispatchEvent(ev);
+        });
 
         // this.icon = icon(plusIcon, "icon-container");
         // this.icon = div("icon-container");

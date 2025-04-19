@@ -5,10 +5,11 @@ export class ProjectList extends Renderable {
     constructor(title, ...projects) {
         super(projects);
         this.title = title;
+        this.section = section("project-list");
     }
 
     toHtml() {
-        return section("project-list").append(
+        return this.section.append(
             h2(this.title, "project-list-title"),
         )
     }

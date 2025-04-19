@@ -1,5 +1,5 @@
 import { Renderable } from "./renderable";
-import { div , p, h3, ul, h2, h4, span, icon } from "./shorthand";
+import { div , p, h3, ul, h2, h4, span, icon, btn } from "./shorthand";
 import circleIcon from "../assets/icons/circle.svg"
 import pencilIcon from "../assets/icons/pencil.svg"
 import noteIcon from "../assets/icons/note.svg"
@@ -55,23 +55,31 @@ export class Todo extends Renderable {
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+        this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
+        this.btnComplete.addEventListener("click", function(e) {
+            const ev = new CustomEvent("todo-completed", {
+                bubbles: true,
+            });
+            this.dispatchEvent(ev);
+        })
+        // this.btnComplete.addEventListener("click", (e) => console.log("child"));
     }
 
     // formatter = //new Intl.DateTimeFormat('en-GB');
 
 
     toHtml() {
-        const priorityClass = `${this.priority}-priority`;
+        // const priorityClass = `${this.priority}-priority`;
         const elem = 
         div("todo").append(
         div("todo-first-row").append(
             div("cont").append(
-            icon(circleIcon, "circle-icon" + " " + priorityClass),
+            this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
             h4(this.title, "title baskerville"),
             ),
             div("todo-icon-tray").append(
-                icon(pencilIcon),
-                icon(noteIcon),
+                icon(pencilIcon, "pencil-icon"),
+                icon(noteIcon, "note-icon"),
                 icon(commentIcon, "comment-icon"),
             )
         ),

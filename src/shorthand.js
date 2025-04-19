@@ -38,6 +38,13 @@ Element.prototype.setText = function (text) {
     return this;
 }
 
+Element.prototype.setID = function(id) {
+    if (id === undefined || id === "") return this;
+
+    this.id = id;
+    return this;
+}
+
 Element.prototype.setAttr = function(name, value) {
     if (name === undefined || value === undefined) 
         return this;
@@ -53,6 +60,16 @@ Element.prototype.siHTML = function(html) {
 
     this.innerHTML = html;
     return this;
+}
+
+NodeList.prototype.contains = function(selector) {
+    for(const i of this) {
+        if(i.classList.contains(selector)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -92,6 +109,8 @@ export const h3 = (text, classlist) => document.createElement("h3").setText(text
 export const h2 = (text, classlist) => document.createElement("h2").setText(text).addClass(classlist);
 export const btn = (classlist) => document.createElement("button").setAttr("type", "button").addClass(classlist);
 export const icon = (svgString, classlist) => div(classlist).siHTML(svgString);
+export const modal = (classlist) => document.createElement("dialog").addClass(classlist);
+export const form = (id, classlist) => document.createElement("form").setID(id).addClass(classlist);
 
 /**
  * 
