@@ -6,6 +6,7 @@ import noteIcon from "../assets/icons/note.svg"
 import commentIcon from "../assets/icons/comment.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import { formatDistance } from 'date-fns'
+import bus from "./event-bus";
 
 /**
  * @typedef {Object} Todo
@@ -57,10 +58,11 @@ export class Todo extends Renderable {
         this.notes = notes;
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
         this.btnComplete.addEventListener("click", function(e) {
-            const ev = new CustomEvent("todo-completed", {
-                bubbles: true,
-            });
-            this.dispatchEvent(ev);
+            bus.emit("todo-completed", this);
+            // const ev = new CustomEvent("todo-completed", {
+            //     bubbles: true,
+            // });
+            // this.dispatchEvent(ev);
         })
     }
 

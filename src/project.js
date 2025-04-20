@@ -8,6 +8,7 @@ import refreshIcon from "../assets/icons/refresh.svg"
 import { btn, div, form, h3, h4, icon, input, p } from "./shorthand";
 import { Todo } from "./todo";
 import { formatDistance } from "date-fns";
+import bus from "./event-bus";
 
 export class Project extends ContainedList {
     /**
@@ -21,12 +22,22 @@ export class Project extends ContainedList {
         // this.container = div(this.classlist);
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
         // TODO: refactor to use event bus
-        this.container.addEventListener("todo-completed", (e) => {
-            const parent = e.target.closest('.project > ul > li');
+        bus.on("todo-completed", (target) => {
+            console.log(target);
+            console.log(this);
+            
+            const parent = target.closest('.project > ul > li');
             if(parent && parent.childNodes.contains("todo")) {
                 parent.remove();
             }
         });
+
+        // this.container.addEventListener("todo-completed", (e) => {
+        //     const parent = e.target.closest('.project > ul > li');
+        //     if(parent && parent.childNodes.contains("todo")) {
+        //         parent.remove();
+        //     }
+        // });
 
         // TODO: refactor to use event bus
         this.container.addEventListener("add-todo", (e) => {

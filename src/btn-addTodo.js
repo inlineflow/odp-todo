@@ -19,6 +19,16 @@ export class AddTodo extends Renderable {
                 icon(plusIcon, "icon-container"),
                 p("Add task"),
         );
+
+        bus.on("todo-completed", (target) => {
+            console.log(target);
+            console.log(this);
+            
+            const parent = target.closest('.project > ul > li');
+            if(parent && parent.childNodes.contains("todo")) {
+                parent.remove();
+            }
+        });
         
         this.button.addEventListener("click", function(e) {
             const ev = new CustomEvent("add-todo", {
