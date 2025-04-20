@@ -4,12 +4,12 @@ import { div, p } from "./shorthand";
 
 export class UserProfile extends Renderable {
     constructor(userName) {
-        super();
+        super(div("user-profile"));
         this.userName = userName;
     }
 
     toHtml() {
-        return div("user-profile").append(
+        return this.container.append(
             div("user-avatar"),
             p(`Hello, ${this.userName}`),
         )

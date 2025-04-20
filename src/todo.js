@@ -50,7 +50,7 @@ export class Todo extends Renderable {
      * @param {string[]} checklist
      */
     constructor(title, dueDate, priority, notes) {
-        super();
+        super(div("todo"));
         this.title = title;
         this.dueDate = dueDate;
         this.priority = priority;
@@ -71,7 +71,7 @@ export class Todo extends Renderable {
     toHtml() {
         // const priorityClass = `${this.priority}-priority`;
         const elem = 
-        div("todo").append(
+        this.container.append(
         div("todo-first-row").append(
             div("cont").append(
             this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),

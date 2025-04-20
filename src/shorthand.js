@@ -111,6 +111,7 @@ export const btn = (classlist) => document.createElement("button").setAttr("type
 export const icon = (svgString, classlist) => div(classlist).siHTML(svgString);
 export const modal = (classlist) => document.createElement("dialog").addClass(classlist);
 export const form = (id, classlist) => document.createElement("form").setID(id).addClass(classlist);
+export const input = (id, classlist) => document.createElement("input").setID(id).addClass(classlist);
 
 /**
  * 

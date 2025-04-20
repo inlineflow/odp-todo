@@ -33,21 +33,28 @@ function render() {
 }
 
 export class Renderable {
-    constructor(children = []) {
+    /**
+     * Base class for objects that need to be rendered to HTML
+     * @param {HTMLElement} container Container for the child contents, typically a `div` or `section`
+     * @param {Object[]} children JS Objects that will be recursively rendered
+     */
+    constructor(container, children = []) {
+        this.container = container;
         this.children = children;
     }
     render = render;
     addChildren = addChildren;
+    addEventListener = function(eventType, callback) { this.container.addEventListener(eventType, callback)};
+    dispatchEvent = function(ev) { this.container.dispatchEvent(ev) };
 }
 
 export class ContainedList extends Renderable {
     constructor(elements, title, mainClass, ulClass) {
-        super();
+        super(div(mainClass));
         this.title = title;
         this.ul = ul(["no-bullet", "contained-list"], elements);
-        this.classlist = mainClass;
-        if (ulClass !== undefined) 
-            this.ul.addClass(ulClass);
+        // this.classlist = mainClass;
+        this.ul.addClass(ulClass);
     }
 
     render = function () {
@@ -68,7 +75,7 @@ export class ContainedList extends Renderable {
     addClass = classlist => this.ul.addClass(classlist);
 
     toHtml() {
-        return div(this.classlist).append(
+        return this.container.append(
             h3(this.title)
         );
     }

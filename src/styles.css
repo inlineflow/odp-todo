@@ -459,3 +459,29 @@ ul {
 	border: none;
 	cursor: pointer;
 }
+
+.add-todo-title {
+  /* background-color: rgb(255, 250, 202); */
+  background-color: rgb(166, 238, 180);
+  border: none;
+  font-family: 'Baskervville';
+  font-weight: normal;
+  font-size: 22pt;
+}
+
+.add-todo-title {
+  margin: 1rem 0;
+}
+
+.add-todo-circle circle {
+  /* fill: url(#stroke-gradient); */
+  fill: rgb(166, 238, 180);
+  stroke: rgb(40, 214, 48);
+  stroke-width: 20px;
+}
+
+#stroke-gradient {
+  --color1: rgb(251, 19, 19);
+  --color2: rgb(255, 200, 0);
+  --color3: rgb(59, 112, 246);
+}

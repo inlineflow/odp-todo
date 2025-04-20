@@ -7,20 +7,7 @@ import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
-
-class App extends Renderable {
-    constructor() {
-        super();
-    }
-    renderChildren = this.render;
-    render = function() {
-        let tree = this.renderChildren();
-        document.body.append(tree);
-        
-    }
-
-    toHtml = () => div("app");
-}
+import { App } from "./app";
 
 const tf = new TodoFactory(formatDistance);
 const x = tf.new("Titlus",  new Date(2025, 3, 15), "medium", "notes");
@@ -57,4 +44,5 @@ const sidebar = new Sidebar(
 // const modal = document.createElement("dialog");
 
 app.addChildren(sidebar, pList);
+app.register("click", ...pList.children);
 app.render();

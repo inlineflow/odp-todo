@@ -10,7 +10,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs1" />
+     id="defs1">
+	 <linearGradient id="stroke-gradient">
+		<stop offset="0%" stop-color="var(--color1)" />
+        <stop offset="33%" stop-color="var(--color2)" />
+		<stop offset="66%" stop-color="var(--color2)" />
+        <stop offset="100%" stop-color="var(--color3)" />
+	 </linearGradient>
+	 </defs>
   <g
      id="layer1"
      transform="translate(-549.88961,-149.69324)">
