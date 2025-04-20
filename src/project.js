@@ -20,6 +20,7 @@ export class Project extends ContainedList {
         this.append(this.btnAddTodo);
         // this.container = div(this.classlist);
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
+        // TODO: refactor to use event bus
         this.container.addEventListener("todo-completed", (e) => {
             const parent = e.target.closest('.project > ul > li');
             if(parent && parent.childNodes.contains("todo")) {
@@ -27,6 +28,7 @@ export class Project extends ContainedList {
             }
         });
 
+        // TODO: refactor to use event bus
         this.container.addEventListener("add-todo", (e) => {
             const parent = e.target.closest('.project > ul > li');
             if (parent) {
@@ -38,29 +40,6 @@ export class Project extends ContainedList {
             )
         });
 
-        this.container.addEventListener("root-clicked", (e) => {
-            this.btnAddTodo.dispatchEvent(new CustomEvent(e.type));
-        });
-        // this.container.addEventListener("click", (e)=> {
-        //     const parent = e.target.closest('.project > ul > li');
-        //     console.log(e.target);
-            
-        //     // console.log(parent);
-        //     // console.log(parent.classList);
-        //     // console.log(parent.childNodes);
-
-        //     if(parent && parent.childNodes.contains("todo")) {
-        //         parent.remove();
-        //     }
-            
-        //     // if (!parent.classList.contains("btn-complete-todo")) {
-        //     //     console.log("Couldn't find element with class .btn-complete-todo");
-        //     // }
-        //     // parent.remove();
-        //     // console.log(e.target.closest('button'));
-        //     // console.log(e.target.closest('.project > ul > li > .todo'));
-        //     // e.target.closest('.project > ul > li > todo').remove();
-        // });
     }
 
     toHtml() { return this.container.append(h3(this.title));}

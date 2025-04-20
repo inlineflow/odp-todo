@@ -44,8 +44,6 @@ export class Renderable {
     }
     render = render;
     addChildren = addChildren;
-    addEventListener = function(eventType, callback) { this.container.addEventListener(eventType, callback)};
-    dispatchEvent = function(ev) { this.container.dispatchEvent(ev) };
 }
 
 export class ContainedList extends Renderable {
@@ -53,7 +51,6 @@ export class ContainedList extends Renderable {
         super(div(mainClass));
         this.title = title;
         this.ul = ul(["no-bullet", "contained-list"], elements);
-        // this.classlist = mainClass;
         this.ul.addClass(ulClass);
     }
 
@@ -80,38 +77,3 @@ export class ContainedList extends Renderable {
         );
     }
 }
-
-// function renderGeneric(item) {
-//     const parse = (kvPair) => {
-//         let name = kvPair[0];
-//         let content = kvPair[1];
-//         let type = typeof kvPair[1];
-//         switch (type) {
-//             case "string":
-//             case "number":
-//                 let p = document.createElement("p");
-//                 p.textContent = `${name}: ${content.toString()}`
-//                 return p;
-//             case "boolean":
-//                 let p1 = document.createElement("p");
-//                 p1.textContent = `${name}: ${content.toString()}`
-//                 return p1;
-//         }
-//     }
-//     const result = [];
-//     const kvPairs = Object.entries(item);
-//     for (const kv in kvPairs) {
-//         if (Array.isArray(kv)) {
-//             const el = document.createElement("div");
-//             for (const i of kv) {
-//                 const child = parse(i);
-//                 el.append(child);
-//             }
-//             result.push(el);
-//         }
-//         const elem = parse(kv);
-//         result.push(elem);
-//     }
-
-//     return result;
-// }    

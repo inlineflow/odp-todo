@@ -7,12 +7,14 @@ import commentIcon from "../assets/icons/comment.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
+import bus from "./event-bus";
 
 export class AddTodo extends Renderable {
     constructor() {
         super(div("btn-container"));
-        this.container.addEventListener("root-clicked", (e) => console.log(e));
+        // bus.on("root-clicked", (data) => console.log(this.btnComplete));
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
+        this.state = "button";
         this.button = btn( "btn-add-todo").append(
                 icon(plusIcon, "icon-container"),
                 p("Add task"),
@@ -25,10 +27,10 @@ export class AddTodo extends Renderable {
 
             this.dispatchEvent(ev);
         });
+    }
 
-        // this.icon = icon(plusIcon, "icon-container");
-        // this.icon = div("icon-container");
-        // this.icon.innerHTML = plusIcon;
+    setupHandlers = function() {
+        bus.on("root-clicked", )
     }
 
     toHtml() {

@@ -72,22 +72,6 @@ NodeList.prototype.contains = function(selector) {
     return false;
 }
 
-/**
- * 
- * @param {Array} items 
- * @returns 
- */
-// Element.prototype.push = function (items) {
-//     if (items === undefined) return this;
-
-//     if (items.constructor === Array) {
-//         this.append(...items);
-//     } else {
-//         this.appendChild(items);
-//     }
-
-//     return this;
-// }
 
 /**
  * 
@@ -147,7 +131,6 @@ export const parseLi = function(item) {
             element.appendChild(item.render())
         }
     }
-    // element.classList.add("no-bullet");
 
     return element;
 }

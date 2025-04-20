@@ -62,10 +62,8 @@ export class Todo extends Renderable {
             });
             this.dispatchEvent(ev);
         })
-        // this.btnComplete.addEventListener("click", (e) => console.log("child"));
     }
 
-    // formatter = //new Intl.DateTimeFormat('en-GB');
 
 
     toHtml() {

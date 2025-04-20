@@ -1,26 +1,21 @@
-import { div } from "./shorthand";
 import { Todo, TodoFactory } from "./todo";
 import "./styles.css";
 import { Project } from "./project";
 import { ProjectList } from "./project-list";
 import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
-import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
 import { App } from "./app";
 
 const tf = new TodoFactory(formatDistance);
 const x = tf.new("Titlus",  new Date(2025, 3, 15), "medium", "notes");
-    // new Todo("title",  new Date(2025, 3, 15), "medium", "notes"),
 
 const todos = [
     new Todo("Order a Burger at Nando's for lunch", new Date(2025, 3, 15) , "high", ""), 
-    // new Todo("title",  new Date(2025, 3, 15), "medium", "notes"),
     x,
     new Todo("title",  new Date(2025, 3, 15), "low", "notes"),
 ];
 
-// todos.push(new AddTodo());
 
 const project = new Project("My Project", todos);
 
@@ -41,8 +36,6 @@ const sidebar = new Sidebar(
         "Upcoming",
 );
 
-// const modal = document.createElement("dialog");
 
 app.addChildren(sidebar, pList);
-app.register("click", ...pList.children);
 app.render();

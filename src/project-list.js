@@ -5,7 +5,6 @@ export class ProjectList extends Renderable {
     constructor(title, ...projects) {
         super(section("project-list"),projects);
         this.title = title;
-        // this.section = section("project-list");
     }
 
     toHtml() {
