@@ -1,14 +1,9 @@
 import { AddTodo } from "./btn-addTodo";
 import { ContainedList, Renderable } from "./renderable";
-import circleIcon from "../assets/icons/circle.svg"
-import pencilIcon from "../assets/icons/pencil.svg"
-import noteIcon from "../assets/icons/note.svg"
-import commentIcon from "../assets/icons/comment.svg"
-import refreshIcon from "../assets/icons/refresh.svg"
 import { btn, div, form, h3, h4, icon, input, p } from "./shorthand";
-import { Todo } from "./todo";
-import { formatDistance } from "date-fns";
+import { Todo, TodoFactory } from "./todo";
 import bus from "./event-bus";
+import { formatDistance } from "date-fns";
 
 export class Project extends ContainedList {
     /**
@@ -17,8 +12,10 @@ export class Project extends ContainedList {
      */
     constructor(title, todos) {
         super(todos, title, "project", "project-todos");
-        this.btnAddTodo = new AddTodo();
+        this.AddTodo = new AddTodo();
+        this.btnAddTodo = this.AddTodo.render();
         this.append(this.btnAddTodo);
+        this.tf = new TodoFactory(formatDistance);
         // this.container = div(this.classlist);
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
         // TODO: refactor to use event bus
@@ -32,34 +29,24 @@ export class Project extends ContainedList {
             }
         });
 
-        // this.container.addEventListener("todo-completed", (e) => {
-        //     const parent = e.target.closest('.project > ul > li');
-        //     if(parent && parent.childNodes.contains("todo")) {
-        //         parent.remove();
-        //     }
-        // });
-
-        // TODO: refactor to use event bus
         bus.on("add-todo", (target) => {
-            // console.log(target);
-            
-            // const parent = target.button.closest('.project > ul > li');
-            // if (parent) {
-            //     parent.remove();
-            // }
-
             target.switchStateTo("form");
         });
-        // this.container.addEventListener("add-todo", (e) => {
-        //     const parent = e.target.closest('.project > ul > li');
-        //     if (parent) {
-        //         parent.remove();
-        //     }
 
-        //     this.append(
-        //         this.btnAddTodo.makeForm(),
-        //     )
-        // });
+        bus.on("create-todo", ({src, title}) => {
+            // this.remove(this.btnAddTodo);
+            console.log(src, title);
+            
+            const todo = this.tf.new(title, new Date(), "high", []);
+
+            src.remove();
+            this.append(todo);
+            const newAdd = new AddTodo();
+            this.AddTodo = newAdd;
+            this.btnAddTodo = this.AddTodo.render();
+            this.append(this.btnAddTodo);
+            // this.container.append(new AddTodo());
+        });
 
     }
 

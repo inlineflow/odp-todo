@@ -97,7 +97,10 @@ export class AddTodo extends Renderable {
                 if (e.key !== 'Enter') {
                     return;
                 }
-                e.preventDefault()
+
+                e.preventDefault();
+                const todoTitle = textField.value;
+                bus.emit("create-todo", {src: this.container.parentElement, title: todoTitle});
                 
                 // console.log(e)
             });

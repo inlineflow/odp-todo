@@ -32,11 +32,9 @@ export class TodoFactory {
 
     /**
      * @param {string} title
-     * @param {string} description
      * @param {Date} dueDate
      * @param {"low" | "medium" | "high"} priority
      * @param {string[]} notes
-     * @param {string[]} checklist
      */
     new = (...args) => new Todo(...args, this.formatter);
 }
@@ -44,13 +42,11 @@ export class TodoFactory {
 export class Todo extends Renderable {
     /**
      * @param {string} title
-     * @param {string} description
      * @param {Date} dueDate
      * @param {"low" | "medium" | "high"} priority
      * @param {string[]} notes
-     * @param {string[]} checklist
      */
-    constructor(title, dueDate, priority, notes) {
+    constructor(title, dueDate, priority, notes, formatter=formatDistance) {
         super(div("todo"));
         this.title = title;
         this.dueDate = dueDate;
@@ -60,6 +56,7 @@ export class Todo extends Renderable {
         this.btnComplete.addEventListener("click", function(e) {
             bus.emit("todo-completed", this);
         })
+        this.formatter = formatter;
     }
 
 
@@ -81,7 +78,7 @@ export class Todo extends Renderable {
         ),
             div("todo-tray").append(
                 icon(refreshIcon, "icon-container"),
-                p(formatDistance(this.dueDate, new Date()), "brawler"), // TODO: Translate to natural language
+                p(this.formatter(this.dueDate, new Date()), "brawler"), // TODO: Translate to natural language
             )
         )
 

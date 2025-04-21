@@ -69,6 +69,18 @@ export class ContainedList extends Renderable {
         return this;
     }
 
+    remove = function(target) {
+        for (let child of this.ul.children) {
+            if (child.contains(target)) {
+                console.log("funny");
+            }
+            // const grandchild = child.children[0];
+            // if (grandchild == target) console.log("funny");
+            
+            // console.log(grandchild);
+        }
+    }
+
     addClass = classlist => this.ul.addClass(classlist);
 
     toHtml() {
