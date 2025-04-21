@@ -470,7 +470,7 @@ ul {
 }
 
 .add-todo-title {
-  margin: 1rem 0;
+  margin-bottom: 0.75rem;
 }
 
 .add-todo-circle circle {

@@ -7,8 +7,11 @@ export class App extends Renderable {
         super(div("app"));
 
         this.container.addEventListener("click", (e) => {
-            bus.emit("root-clicked", this);
-            e.stopPropagation();
+            // setTimeout(() => {
+                bus.emit("root-clicked", e.target);
+                e.stopImmediatePropagation();
+            // }, 200);
+            // e.stopPropagation();
         });
     }
     /** @type {HTMLElement[]} */

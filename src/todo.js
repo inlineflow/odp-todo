@@ -59,10 +59,6 @@ export class Todo extends Renderable {
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
         this.btnComplete.addEventListener("click", function(e) {
             bus.emit("todo-completed", this);
-            // const ev = new CustomEvent("todo-completed", {
-            //     bubbles: true,
-            // });
-            // this.dispatchEvent(ev);
         })
     }
 

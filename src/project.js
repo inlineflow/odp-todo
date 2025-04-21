@@ -40,16 +40,26 @@ export class Project extends ContainedList {
         // });
 
         // TODO: refactor to use event bus
-        this.container.addEventListener("add-todo", (e) => {
-            const parent = e.target.closest('.project > ul > li');
-            if (parent) {
-                parent.remove();
-            }
+        bus.on("add-todo", (target) => {
+            // console.log(target);
+            
+            // const parent = target.button.closest('.project > ul > li');
+            // if (parent) {
+            //     parent.remove();
+            // }
 
-            this.append(
-                this.btnAddTodo.makeForm(),
-            )
+            target.switchStateTo("form");
         });
+        // this.container.addEventListener("add-todo", (e) => {
+        //     const parent = e.target.closest('.project > ul > li');
+        //     if (parent) {
+        //         parent.remove();
+        //     }
+
+        //     this.append(
+        //         this.btnAddTodo.makeForm(),
+        //     )
+        // });
 
     }
 
