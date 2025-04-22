@@ -5,22 +5,29 @@ import pencilIcon from "../assets/icons/pencil.svg"
 import noteIcon from "../assets/icons/note.svg"
 import commentIcon from "../assets/icons/comment.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
+import arrowIcon from "../assets/icons/arrow.svg"
 import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
 import bus from "./event-bus";
+
+const priorities = ["low", "medium", "high"];
 
 export class AddTodo extends Renderable {
     constructor() {
         // super(div("btn-container"));
         super(div("add-todo-container"));
         // bus.on("root-clicked", (data) => console.log(this.btnComplete));
-        this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`).append(icon(circleIcon, "circle-icon add-todo-circle"));
+        // this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`).append(icon(circleIcon, "circle-icon add-todo-circle"));
+        this.arrow = icon(arrowIcon, "prompt-icon");
         this.state = "button";
         this.button = btn( "btn-add-todo").append(
                 icon(plusIcon, "icon-container"),
                 p("Add task"),
         );
         this.container.append(this.makeButton()); // this is not a mistake
+        this.textField = {state: 0, htmlElement: input("title", "add-todo-title low-priority")};
+
+
 
         this.setupHandlers();
         
@@ -51,6 +58,24 @@ export class AddTodo extends Renderable {
 
             // this.dispatchEvent(ev);
         });
+
+
+            this.textField.htmlElement.addEventListener("keydown", (e) => {
+                if (e.key !== 'Enter') {
+                    return;
+                }
+
+                e.preventDefault();
+                const todoTitle = textField.value;
+                bus.emit("create-todo", {src: this.container.parentElement, title: todoTitle});
+                
+                // console.log(e)
+            });
+
+            this.textField.htmlElement.addEventListener("keydown", (e) => {
+                
+            });
+
     }
 
     switchStateTo(targetState) {
@@ -92,37 +117,51 @@ export class AddTodo extends Renderable {
     }
 
     makeForm() {
-            const textField = input("title", "add-todo-title");
-            textField.addEventListener("keydown", (e) => {
-                if (e.key !== 'Enter') {
-                    return;
-                }
-
-                e.preventDefault();
-                const todoTitle = textField.value;
-                bus.emit("create-todo", {src: this.container.parentElement, title: todoTitle});
-                
-                // console.log(e)
-            });
-
-            return form("add-todo").append(
+        return form("add-todo").append(
             div("todo-first-row").append(
             div("cont").append(
-            this.btnComplete,
-            // input("title", "add-todo-title"),
-            textField,
+            // this.btnComplete,
+                this.arrow,
+                // input("title", "add-todo-title"),
+                this.textField.htmlElement,
+
+                div("controls").append(
+                btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
+                btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
+                )),
+            // div("todo-icon-tray").append(
+            //     btn("priority-control"),
+            //     btn("priority-control"),
+                // icon(pencilIcon, "pencil-icon"),
+                // icon(noteIcon, "note-icon"),
+            //     icon(commentIcon, "comment-icon"),
+                // )
             ),
-            div("todo-icon-tray").append(
-                icon(pencilIcon, "pencil-icon"),
-                icon(noteIcon, "note-icon"),
-                icon(commentIcon, "comment-icon"),
-            )
-                ),
-            div("todo-tray").append(
-                icon(refreshIcon, "icon-container"),
-                p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
-            )
+            // div("todo-tray").append(
+            //     icon(refreshIcon, "icon-container"),
+            //     p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
+            // )
         );
+    }
+
+    increasePriority() {
+        if(this.textField.state >= 2) return;
+
+        const currentPriority = priorities[this.textField.state];
+
+        this.textField.state++;
+        const newPriority = priorities[this.textField.state];
+        this.textField.htmlElement.classList.replace(`${currentPriority}-priority`, `${newPriority}-priority`);
+    }
+
+    decreasePriority() {
+        if(this.textField.state <= 0) return;
+
+        const currentPriority = priorities[this.textField.state];
+
+        this.textField.state--;
+        const newPriority = priorities[this.textField.state];
+        this.textField.htmlElement.classList.replace(`${currentPriority}-priority`, `${newPriority}-priority`);
     }
     
 }

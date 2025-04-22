@@ -62,6 +62,12 @@ Element.prototype.siHTML = function(html) {
     return this;
 }
 
+Element.prototype.addHandler = function(type, fn) {
+    this.addEventListener(type, fn);
+
+    return this;
+}
+
 NodeList.prototype.contains = function(selector) {
     for(const i of this) {
         if(i.classList.contains(selector)) {

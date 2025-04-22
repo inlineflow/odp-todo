@@ -34,8 +34,9 @@ export class Project extends ContainedList {
         });
 
         bus.on("create-todo", ({src, title}) => {
-            // this.remove(this.btnAddTodo);
-            console.log(src, title);
+            if (!this.container.contains(src))
+                return;
+            
             
             const todo = this.tf.new(title, new Date(), "high", []);
 
@@ -45,7 +46,6 @@ export class Project extends ContainedList {
             this.AddTodo = newAdd;
             this.btnAddTodo = this.AddTodo.render();
             this.append(this.btnAddTodo);
-            // this.container.append(new AddTodo());
         });
 
     }
