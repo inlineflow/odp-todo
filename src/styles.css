@@ -537,3 +537,7 @@ input.medium-priority {
 input.low-priority {
   border-block-color: var(--low-priority-dark);
 }
+
+#add-todo > label {
+  margin-left: 2.5rem;
+}

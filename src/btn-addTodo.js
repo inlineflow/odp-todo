@@ -1,4 +1,4 @@
-import { btn, div, form, icon, input, p } from "./shorthand";
+import { btn, div, form, icon, input, label, p } from "./shorthand";
 import plusIcon from "../assets/icons/plus-sign.svg";
 import circleIcon from "../assets/icons/circle.svg"
 import pencilIcon from "../assets/icons/pencil.svg"
@@ -25,7 +25,7 @@ export class AddTodo extends Renderable {
                 p("Add task"),
         );
         this.container.append(this.makeButton()); // this is not a mistake
-        this.textField = {state: 0, htmlElement: input("title", "add-todo-title low-priority")};
+        this.textField = {state: 'low-priority', htmlElement: input("title", "add-todo-title low-priority")};
 
 
 
@@ -66,14 +66,68 @@ export class AddTodo extends Renderable {
                 }
 
                 e.preventDefault();
-                const todoTitle = textField.value;
+                const todoTitle = this.textField.htmlElement.value;
                 bus.emit("create-todo", {src: this.container.parentElement, title: todoTitle});
                 
                 // console.log(e)
             });
 
             this.textField.htmlElement.addEventListener("keydown", (e) => {
+                const skipKeys = [
+                        "Delete",
+                        "Insert",
+                        "Home",
+                        "End",
+                        "PageDown",
+                        "PageUp",
+                        "NumLock",
+                        "Alt",
+                        "Control",
+                        "Shift",
+                        "Tab",
+                        "Enter"
+                    ];
+
+                if (skipKeys.includes(e.key)) {
+                    return;
+                }
+
+                const priorityTags = {
+                        lp: 'low-priority',
+                        mp: 'medium-priority',
+                        hp: 'high-priority',
+                    };
+
+                // if (e.key === "Backspace") {
+
+                // }
+
+                // for(const x of Object.keys(priorityTags)) {
+                //     console.log(x)
+                // }
+
+                const val = this.textField.htmlElement.value + e.key;
+                const words = val.split(" ");                
+
+                for(const w of words) {
+                    for (const key of Object.keys(priorityTags)) {
+                        if (w.toLowerCase() === key) {
+                            this.changePriority(priorityTags[key]);
+                        }
+                    }
+                }
+
+
+                // console.log(words);
                 
+
+                // for(const w of words) {
+                //     // if (!skipKeys.includes(w))
+                //     // console.log(w);
+                    
+                // }
+                
+
             });
 
     }
@@ -118,6 +172,7 @@ export class AddTodo extends Renderable {
 
     makeForm() {
         return form("add-todo").append(
+            label("Title: ", "add-todo-label"),
             div("todo-first-row").append(
             div("cont").append(
             // this.btnComplete,
@@ -125,10 +180,11 @@ export class AddTodo extends Renderable {
                 // input("title", "add-todo-title"),
                 this.textField.htmlElement,
 
-                div("controls").append(
-                btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
-                btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
-                )),
+                // div("controls").append(
+                // btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
+                // btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
+                // )
+            ),
             // div("todo-icon-tray").append(
             //     btn("priority-control"),
             //     btn("priority-control"),
@@ -142,6 +198,11 @@ export class AddTodo extends Renderable {
             //     p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
             // )
         );
+    }
+
+    changePriority(priority) {
+        this.textField.htmlElement.classList.replace(this.textField.state, priority);
+        this.textField.state = priority;
     }
 
     increasePriority() {

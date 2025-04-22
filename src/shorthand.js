@@ -102,7 +102,7 @@ export const icon = (svgString, classlist) => div(classlist).siHTML(svgString);
 export const modal = (classlist) => document.createElement("dialog").addClass(classlist);
 export const form = (id, classlist) => document.createElement("form").setID(id).addClass(classlist);
 export const input = (id, classlist) => document.createElement("input").setID(id).addClass(classlist);
-
+export const label = (text, classlist) => document.createElement("label").setText(text).addClass(classlist);
 /**
  * 
  * @param {string[]} items 
