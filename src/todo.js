@@ -76,7 +76,7 @@ export class Todo extends Renderable {
                 icon(commentIcon, "comment-icon"),
             )
         ),
-            div("todo-tray").append(
+            div("todo-second-row").append(
                 icon(refreshIcon, "icon-container"),
                 p(this.formatter(this.dueDate, new Date()), "due-date brawler"), // TODO: Translate to natural language
             )
@@ -86,15 +86,18 @@ export class Todo extends Renderable {
     }
 }
 
-export const makeTitle = function(text) {
-        return div("todo-title-container").append(
-            this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
+export const makeTitle = text => 
+        div("todo-title-container").append(
+            btn(`btn-complete-todo low-priority`).append(
+                icon(circleIcon, "circle-icon"),
+            ).addHandler("click", function() {
+            bus.emit("todo-completed", this);
+            }),
+            // this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
             h4(text, "title baskerville"),
             );
-}
 
-export const makeFirstRow = function(text) {
-    return div("todo-first-row").append(
+export const makeFirstRow = text => div("todo-first-row").append(
         makeTitle(text),
         div("todo-icon-tray").append(
             icon(pencilIcon, "pencil-icon"),
@@ -102,4 +105,9 @@ export const makeFirstRow = function(text) {
             icon(commentIcon, "comment-icon"),
         )
     );
-}
+
+export const makeSecondRow = date => 
+        div("todo-second-row").append(
+            icon(refreshIcon, "icon-container"),
+            p(this.formatter(date, new Date()), "due-date brawler"), // TODO: Translate to natural language
+)

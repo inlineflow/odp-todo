@@ -21,7 +21,7 @@ export class Form extends Renderable {
             this.renderState = renderState;
 
 
-            return {prompt: prompt, container: box,  }
+            return {prompt: prompt, container: box, renderResult: elem.renderResult, renderState: renderState}
         });
 
         // this.baseForm = [label("Title: ", "add-todo-label"),
@@ -32,7 +32,8 @@ export class Form extends Renderable {
         //         this.textField.htmlElement)];
 
         this.arrow = icon(arrowIcon, "prompt-icon");
-        this.currentField = this.states[0];
+        this.currentStateIndex = 0;
+        this.currentState = this.states[this.currentStateIndex];
         this.setupHandlers();
         // this.inputBox = div("input-box").append(label(this.states[0].title, this.states[0].classlist), input("title", "add-todo-title low-priority"));
     }
@@ -42,10 +43,19 @@ export class Form extends Renderable {
 
             state.prompt.input.addEventListener("keydown", (e) => {
                 if (e.key !== 'Enter') {
+                    e.stopPropagation();
                     return;
                 }
 
                 e.preventDefault();
+
+                // this.nextState();
+                // const res = state.renderResult();               
+                const parent = state.container.parentElement;
+                const todoTitle = state.prompt.input.value;
+                const s = state.renderState();
+                parent.replaceChildren(state.renderResult(todoTitle), ...this.nextState().renderState());
+                // bus.emit("")
                 // const todoTitle = state.input.value;
                 // bus.emit("create-todo", {src: state.container.parentElement, title: todoTitle});
             })
@@ -57,9 +67,11 @@ export class Form extends Renderable {
                 "NumLock", "Alt", "Control",
                 "Shift", "Tab", "Enter" ];
 
+
                 if (skipKeys.includes(e.key)) {
                     return;
                 }
+
 
                 const priorityTags = {
                         lp: 'low-priority',
@@ -67,7 +79,7 @@ export class Form extends Renderable {
                         hp: 'high-priority',
                     };
 
-                const val = this.inputBox.value + e.key;
+                const val = state.prompt.input.value + e.key;
                 const words = val.split(" ");                
                 console.log(words);
                 
@@ -81,5 +93,11 @@ export class Form extends Renderable {
                 // }
             });
             })
-        }
+    }
+
+    nextState = () => {
+        this.currentStateIndex++;
+        this.currentState = this.states[this.currentStateIndex];
+        return this.currentState;
+    }
 }

@@ -10,7 +10,7 @@ import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
 import bus from "./event-bus";
 import {Form} from "./form";
-import { makeFirstRow } from "./todo";
+import { makeFirstRow, makeSecondRow } from "./todo";
 
 const priorities = ["low", "medium", "high"];
 
@@ -33,7 +33,14 @@ export class AddTodo extends Renderable {
             inputClass: "add-todo-title",
             containerClass: "todo-title-container",
             renderResult: text => makeFirstRow(text),
-        });
+        },
+        {
+            title: "Due Date",
+            inputClass: "add-todo-date",
+            containerClass: "todo-date-container",
+            renderResult: date => makeSecondRow(date),
+        }
+    );
 
 
 
@@ -182,31 +189,32 @@ export class AddTodo extends Renderable {
     }
 
     makeForm() {
-        return [label("Title: ", "add-todo-label"),
-            // div("todo-first-row").append(
-            div("todo-title-container").append(
-            // this.btnComplete,
-                this.arrow,
-                // input("title", "add-todo-title"),
-                this.textField.htmlElement,
+        return this.form.currentState.renderState();
+        // return [label("Title: ", "add-todo-label"),
+        //     // div("todo-first-row").append(
+        //     div("todo-title-container").append(
+        //     // this.btnComplete,
+        //         this.arrow,
+        //         // input("title", "add-todo-title"),
+        //         this.textField.htmlElement,
 
-                // div("controls").append(
-                // btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
-                // btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
-                // )
-            // div("todo-icon-tray").append(
-            //     btn("priority-control"),
-            //     btn("priority-control"),
-                // icon(pencilIcon, "pencil-icon"),
-                // icon(noteIcon, "note-icon"),
-            //     icon(commentIcon, "comment-icon"),
-                // )
-            // ),
-            // div("todo-tray").append(
-            //     icon(refreshIcon, "icon-container"),
-            //     p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
-            // )
-        )];
+        //         // div("controls").append(
+        //         // btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
+        //         // btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
+        //         // )
+        //     // div("todo-icon-tray").append(
+        //     //     btn("priority-control"),
+        //     //     btn("priority-control"),
+        //         // icon(pencilIcon, "pencil-icon"),
+        //         // icon(noteIcon, "note-icon"),
+        //     //     icon(commentIcon, "comment-icon"),
+        //         // )
+        //     // ),
+        //     // div("todo-tray").append(
+        //     //     icon(refreshIcon, "icon-container"),
+        //     //     p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
+        //     // )
+        // )];
     }
 
     changePriority(priority) {
