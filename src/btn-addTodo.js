@@ -1,4 +1,4 @@
-import { btn, div, form, icon, input, label, p } from "./shorthand";
+import { btn, div, form, h4, icon, input, label, p } from "./shorthand";
 import plusIcon from "../assets/icons/plus-sign.svg";
 import circleIcon from "../assets/icons/circle.svg"
 import pencilIcon from "../assets/icons/pencil.svg"
@@ -9,6 +9,7 @@ import arrowIcon from "../assets/icons/arrow.svg"
 import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
 import bus from "./event-bus";
+import {Form} from "./form";
 
 const priorities = ["low", "medium", "high"];
 
@@ -26,6 +27,12 @@ export class AddTodo extends Renderable {
         );
         this.container.append(this.makeButton()); // this is not a mistake
         this.textField = {state: 'low-priority', htmlElement: input("title", "add-todo-title low-priority")};
+        this.form = new Form({
+            title: "Title",
+            inputClass: "add-todo-title",
+            containerClass: "todo-title-container",
+            render: text => h4(text, "title baskervville")
+        });
 
 
 
@@ -149,8 +156,11 @@ export class AddTodo extends Renderable {
         // const parent = this.container.parentElement;
         const newView = this.newState();
         // this.container = this.toHtml();
-
-        this.container.replaceChildren(newView);
+        if(Array.isArray(newView)) {
+            this.container.replaceChildren(...newView);
+        } else {
+            this.container.replaceChildren(newView);
+        }
         // parent.replaceChild(newView, this.container);
     }
 
@@ -171,10 +181,9 @@ export class AddTodo extends Renderable {
     }
 
     makeForm() {
-        return form("add-todo").append(
-            label("Title: ", "add-todo-label"),
-            div("todo-first-row").append(
-            div("cont").append(
+        return [label("Title: ", "add-todo-label"),
+            // div("todo-first-row").append(
+            div("todo-title-container").append(
             // this.btnComplete,
                 this.arrow,
                 // input("title", "add-todo-title"),
@@ -184,7 +193,6 @@ export class AddTodo extends Renderable {
                 // btn("priority-control high-priority").append(p("Up")).addHandler("click", () => this.increasePriority()),
                 // btn("priority-control low-priority").append(p("Down")).addHandler("click", () => this.decreasePriority()),
                 // )
-            ),
             // div("todo-icon-tray").append(
             //     btn("priority-control"),
             //     btn("priority-control"),
@@ -192,12 +200,12 @@ export class AddTodo extends Renderable {
                 // icon(noteIcon, "note-icon"),
             //     icon(commentIcon, "comment-icon"),
                 // )
-            ),
+            // ),
             // div("todo-tray").append(
             //     icon(refreshIcon, "icon-container"),
             //     p(formatDistance(new Date(), new Date()), "brawler"), // TODO: Translate to natural language
             // )
-        );
+        )];
     }
 
     changePriority(priority) {

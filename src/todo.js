@@ -66,7 +66,7 @@ export class Todo extends Renderable {
         const elem = 
         this.container.append(
         div("todo-first-row").append(
-            div("cont").append(
+            div("todo-title-container").append(
             this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
             h4(this.title, "title baskerville"),
             ),
@@ -78,7 +78,7 @@ export class Todo extends Renderable {
         ),
             div("todo-tray").append(
                 icon(refreshIcon, "icon-container"),
-                p(this.formatter(this.dueDate, new Date()), "brawler"), // TODO: Translate to natural language
+                p(this.formatter(this.dueDate, new Date()), "due-date brawler"), // TODO: Translate to natural language
             )
         )
 
