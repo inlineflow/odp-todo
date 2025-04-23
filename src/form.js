@@ -15,11 +15,11 @@ export class Form extends Renderable {
             const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: input(elem.title, elem.inputClass)};
             box.append(...Object.values(prompt));
             const x = [lab, box];
-            this.renderState = renderState;
-
             const renderState = function() {
                 return x;
             }
+            this.renderState = renderState;
+
 
             return {prompt: prompt, container: box,  }
         });

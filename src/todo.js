@@ -85,3 +85,21 @@ export class Todo extends Renderable {
         return elem;
     }
 }
+
+export const makeTitle = function(text) {
+        return div("todo-title-container").append(
+            this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
+            h4(text, "title baskerville"),
+            );
+}
+
+export const makeFirstRow = function(text) {
+    return div("todo-first-row").append(
+        makeTitle(text),
+        div("todo-icon-tray").append(
+            icon(pencilIcon, "pencil-icon"),
+            icon(noteIcon, "note-icon"),
+            icon(commentIcon, "comment-icon"),
+        )
+    );
+}

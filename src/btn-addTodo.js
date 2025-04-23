@@ -10,6 +10,7 @@ import { Renderable } from "./renderable";
 import { formatDistance } from "date-fns";
 import bus from "./event-bus";
 import {Form} from "./form";
+import { makeFirstRow } from "./todo";
 
 const priorities = ["low", "medium", "high"];
 
@@ -31,7 +32,7 @@ export class AddTodo extends Renderable {
             title: "Title",
             inputClass: "add-todo-title",
             containerClass: "todo-title-container",
-            render: text => h4(text, "title baskervville")
+            renderResult: text => makeFirstRow(text),
         });
 
 
