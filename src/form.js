@@ -70,7 +70,7 @@ export class Form extends Renderable {
                 const todoTitle = state.prompt.input.value;
                 const s = state.renderPrompt();
                 state.container.replaceWith(state.renderResult(todoTitle), this.nextState().renderPrompt())
-                state.container.replaceChildren(state.renderResult(todoTitle), this.nextState().renderPrompt());
+                // state.container.replaceChildren(state.renderResult(todoTitle), this.nextState().renderPrompt());
                 // bus.emit("")
                 // const todoTitle = state.input.value;
                 // bus.emit("create-todo", {src: state.container.parentElement, title: todoTitle});
