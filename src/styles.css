@@ -172,6 +172,8 @@
 
   --low-priority-light: rgb(187, 212, 253);
   --low-priority-dark: rgb(59, 112, 246);
+
+  --due-date-color: rgb(1, 159, 1);
 }
 
 * {
@@ -325,17 +327,17 @@ ul {
   margin-left: calc(30px + 0.5rem);
 }
 
-.todo-tray .icon-container {
+.todo-second-row .icon-container {
   width: 25px;
   height: 25px;
 }
 
 
-.todo-tray .icon-container path {
+.due-date-icon path {
   stroke: rgb(1, 159, 1);
 }
 
-.todo-tray p {
+.due-date-text {
   color: rgb(1, 159, 1);
 }
 
@@ -350,6 +352,7 @@ ul {
 .todo-low-priority {
   border-right: 9px solid #a9e7ff;
 }
+
 
 /* .high-priority {
   background-color: maroon;
@@ -543,13 +546,60 @@ input.low-priority {
   margin-left: 2.5rem;
   font-weight: bold;
 }
-.add-todo-container .title {
-	/* color: #121212; */
+
+/* .add-todo-container .title {
+	color: #121212; 
 	grid-column: 1 / 3;
 	grid-row: 1;
 	/* margin-bottom: 5px; */
-	/* margin: 5px 0; */
+	/* margin: 5px 0; 
 	font-family: 'Baskervville';
 	font-weight: normal;
 	font-size: 22pt;
+} */
+
+.todo-date-container {
+  display: flex;
+  gap: 0.5rem;
+  /* justify-content: center; */
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+input.add-todo-date {
+  background-color: #fafafa;
+  border: none;
+  border-bottom: 3px solid var(--due-date-color);
+  /* border-radius: 5px; */
+  font-family: 'Baskervville';
+  font-weight: normal;
+  outline: none;
+  font-size: 12pt;
+}
+
+label.add-todo-date {
+
+  font-size: 10pt;
+  font-weight: normal;
+  margin-left: calc(30px + 0.5rem + 2.5rem);
+}
+
+.prompt-container {
+  display: flex;
+  gap: 0.5rem;
+  /* justify-content: center; */
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.prompt-container input {
+  /* background-color: rgb(255, 250, 202); */
+  /* background-color: rgb(166, 238, 180); */
+  background-color: #fafafa;
+  border: none;
+  border-bottom: 3px solid var(--low-priority-dark);
+  /* border-radius: 5px; */
+  font-family: 'Baskervville';
+  font-weight: normal;
+  font-size: 22pt;
 }

@@ -77,8 +77,8 @@ export class Todo extends Renderable {
             )
         ),
             div("todo-second-row").append(
-                icon(refreshIcon, "icon-container"),
-                p(this.formatter(this.dueDate, new Date()), "due-date brawler"), // TODO: Translate to natural language
+                icon(refreshIcon, "due-date-icon"),
+                p(this.formatter(this.dueDate, new Date()), "due-date-text brawler"), // TODO: Translate to natural language
             )
         )
 
@@ -106,8 +106,8 @@ export const makeFirstRow = text => div("todo-first-row").append(
         )
     );
 
-export const makeSecondRow = date => 
+export const makeSecondRow = (date, formatter) => 
         div("todo-second-row").append(
-            icon(refreshIcon, "icon-container"),
-            p(this.formatter(date, new Date()), "due-date brawler"), // TODO: Translate to natural language
+            icon(refreshIcon, "due-date-icon"),
+            p(formatter(date, new Date()), "due-date-text brawler"), // TODO: Translate to natural language
 )

@@ -7,7 +7,7 @@ import commentIcon from "../assets/icons/comment.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import arrowIcon from "../assets/icons/arrow.svg"
 import { Renderable } from "./renderable";
-import { formatDistance } from "date-fns";
+import { formatDistance, parse } from "date-fns";
 import bus from "./event-bus";
 import {Form} from "./form";
 import { makeFirstRow, makeSecondRow } from "./todo";
@@ -31,14 +31,15 @@ export class AddTodo extends Renderable {
         this.form = new Form({
             title: "Title",
             inputClass: "add-todo-title",
-            containerClass: "todo-title-container",
+            inputContainerClass: "add-todo-title-container",
             renderResult: text => makeFirstRow(text),
         },
         {
             title: "Due Date",
             inputClass: "add-todo-date",
-            containerClass: "todo-date-container",
-            renderResult: date => makeSecondRow(date),
+            inputContainerClass: "todo-date-container",
+            wrapper: div("todo-second-row"),
+            renderResult: date => makeSecondRow(parse(date, 'dd/MM/yyyy', new Date()), formatDistance),
         }
     );
 
@@ -189,7 +190,7 @@ export class AddTodo extends Renderable {
     }
 
     makeForm() {
-        return this.form.currentState.renderState();
+        return this.form.currentState.renderPrompt();
         // return [label("Title: ", "add-todo-label"),
         //     // div("todo-first-row").append(
         //     div("todo-title-container").append(

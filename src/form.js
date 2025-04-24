@@ -8,20 +8,35 @@ export class Form extends Renderable {
         super();
         const s = states.flat(Infinity);
         this.states = s.map(elem => {
+            // let container;
+            const container = div(elem.inputContainerClass);
             const lab = label(`${elem.title}:`, elem.inputClass);
-            const box = div(elem.containerClass).append(
-                // label(`${elem.title}:`, elem.inputClass)
+            const promptContainer = div("prompt-container").append(
+                // icon(arrowIcon, "prompt-icon"),
+                // input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)
             );
-            const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: input(elem.title, elem.inputClass)};
-            box.append(...Object.values(prompt));
-            const x = [lab, box];
+            // if (elem.wrapper !== undefined) {
+            //     container = elem.wrapper.append(promptContainer);
+            // } else {
+            //     container = promptContainer;
+            // }
+            // const container = elem.wrapper === undefined ? box : elem
+            const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)};
+            promptContainer.append(...Object.values(prompt));
+            // promptContainer.append(
+            //     icon(arrowIcon, "prompt-icon"),
+            //     input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)
+            // )
+            // const x = [lab, container];
             const renderState = function() {
-                return x;
+                return container.append(lab, promptContainer);
             }
             this.renderState = renderState;
 
 
-            return {prompt: prompt, container: box, renderResult: elem.renderResult, renderState: renderState}
+            return {prompt: prompt, container: container, renderResult: elem.renderResult,
+                    renderPrompt: renderState,
+                    wrapper: elem.wrapper,}
         });
 
         // this.baseForm = [label("Title: ", "add-todo-label"),
@@ -51,10 +66,11 @@ export class Form extends Renderable {
 
                 // this.nextState();
                 // const res = state.renderResult();               
-                const parent = state.container.parentElement;
+                // const parent = state.container.parentElement;
                 const todoTitle = state.prompt.input.value;
-                const s = state.renderState();
-                parent.replaceChildren(state.renderResult(todoTitle), ...this.nextState().renderState());
+                const s = state.renderPrompt();
+                state.container.replaceWith(state.renderResult(todoTitle), this.nextState().renderPrompt())
+                state.container.replaceChildren(state.renderResult(todoTitle), this.nextState().renderPrompt());
                 // bus.emit("")
                 // const todoTitle = state.input.value;
                 // bus.emit("create-todo", {src: state.container.parentElement, title: todoTitle});
@@ -97,6 +113,9 @@ export class Form extends Renderable {
 
     nextState = () => {
         this.currentStateIndex++;
+        if (this.currentStateIndex >= this.states.length) {
+            return {renderPrompt: () => []}
+        }
         this.currentState = this.states[this.currentStateIndex];
         return this.currentState;
     }
