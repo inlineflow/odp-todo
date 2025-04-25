@@ -2,6 +2,8 @@ Element.prototype.__append = Element.prototype.append;
 Element.prototype.append = function (...items) {
     if (items === undefined) return this;
 
+    items = items.filter(el => el !== undefined);
+
         this.__append(...items);
 
     return this;

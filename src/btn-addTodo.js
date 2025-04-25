@@ -40,6 +40,25 @@ export class AddTodo extends Renderable {
             inputContainerClass: "todo-date-container",
             wrapper: div("todo-second-row"),
             renderResult: date => makeSecondRow(parse(date, 'dd/MM/yyyy', new Date()), formatDistance),
+        },
+        {
+            title: "Priority",
+            inputClass: "add-todo-priority",
+            inputContainerClass: "todo-priority-container",
+            renderResult: (newPriority) => {
+                const root = this.container;
+                const children = root.querySelectorAll(":scope > .low-priority");
+                children.forEach(ch => ch.classList.replace("low-priority", newPriority));
+                root.classList.replace("add-todo-container", "todo");
+            },
+            customPrompt: div("controls").append(
+                btn("priority-control"),
+                btn("priority-control"),
+            ),
+            renderState: function() {
+                const secondRow = document.querySelector(".add-todo-container .todo-second-row");
+                secondRow.append(this.container);
+            },
         }
     );
 

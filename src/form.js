@@ -22,21 +22,29 @@ export class Form extends Renderable {
             // }
             // const container = elem.wrapper === undefined ? box : elem
             const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)};
-            promptContainer.append(...Object.values(prompt));
+            if (elem.customPrompt === undefined) {
+                promptContainer.append(...Object.values(prompt));
+            } else {
+                promptContainer.append(elem.customPrompt);
+            }
             // promptContainer.append(
             //     icon(arrowIcon, "prompt-icon"),
             //     input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)
             // )
             // const x = [lab, container];
+            container.append(lab, promptContainer);
             const renderState = function() {
-                return container.append(lab, promptContainer);
+                // return container.append(lab, promptContainer);
+                return container;
             }
-            this.renderState = renderState;
 
-
-            return {prompt: prompt, container: container, renderResult: elem.renderResult,
-                    renderPrompt: renderState,
+            const state =  {prompt: prompt, container: container, renderResult: elem.renderResult,
+                    renderPrompt: this.renderState,
                     wrapper: elem.wrapper,}
+            state.renderPrompt = elem.renderState === undefined ? renderState : elem.renderState.bind(state);
+            return state;
+
+
         });
 
         // this.baseForm = [label("Title: ", "add-todo-label"),
@@ -68,8 +76,11 @@ export class Form extends Renderable {
                 // const res = state.renderResult();               
                 // const parent = state.container.parentElement;
                 const todoTitle = state.prompt.input.value;
-                const s = state.renderPrompt();
-                state.container.replaceWith(state.renderResult(todoTitle), this.nextState().renderPrompt())
+                const res = state.renderResult(todoTitle);
+                state.container.replaceWith(res);                
+                const resParent = res.parentElement;
+                resParent.append(this.nextState().renderPrompt());
+                // state.container.replaceWith(state.renderResult(todoTitle), this.nextState().renderPrompt())
                 // state.container.replaceChildren(state.renderResult(todoTitle), this.nextState().renderPrompt());
                 // bus.emit("")
                 // const todoTitle = state.input.value;
