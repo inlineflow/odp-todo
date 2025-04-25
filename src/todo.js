@@ -97,14 +97,18 @@ export const makeTitle = text =>
             h4(text, "title baskerville"),
             );
 
-export const makeFirstRow = text => div("todo-first-row").append(
-        makeTitle(text),
-        div("todo-icon-tray").append(
-            icon(pencilIcon, "pencil-icon"),
-            icon(noteIcon, "note-icon"),
-            icon(commentIcon, "comment-icon"),
-        )
-    );
+export const makeFirstRow = (text, includeIcons=true) => {
+    const elem = div("todo-first-row").append(
+        makeTitle(text));
+        if (includeIcons) {
+            elem.append(div("todo-icon-tray").append(
+                icon(pencilIcon, "pencil-icon"),
+                icon(noteIcon, "note-icon"),
+                icon(commentIcon, "comment-icon"),
+            ));
+        }
+        return elem;
+};
 
 export const makeSecondRow = (date, formatter) => 
         div("todo-second-row").append(

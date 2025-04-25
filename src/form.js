@@ -21,9 +21,12 @@ export class Form extends Renderable {
             //     container = promptContainer;
             // }
             // const container = elem.wrapper === undefined ? box : elem
-            const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass)};
+            const promptInput = input(elem.title.toLowerCase().replace(' ', '-'), elem.inputClass);
+            
+            // const prompt = {icon: icon(arrowIcon, "prompt-icon"), input: };
+            const prompt = {container: promptContainer, input: promptInput};
             if (elem.customPrompt === undefined) {
-                promptContainer.append(...Object.values(prompt));
+                promptContainer.append(icon(arrowIcon, "prompt-icon"), promptInput);
             } else {
                 promptContainer.append(elem.customPrompt);
             }

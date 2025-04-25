@@ -32,7 +32,7 @@ export class AddTodo extends Renderable {
             title: "Title",
             inputClass: "add-todo-title",
             inputContainerClass: "add-todo-title-container",
-            renderResult: text => makeFirstRow(text),
+            renderResult: text => makeFirstRow(text, false),
         },
         {
             title: "Due Date",
@@ -52,12 +52,14 @@ export class AddTodo extends Renderable {
                 root.classList.replace("add-todo-container", "todo");
             },
             customPrompt: div("controls").append(
-                btn("priority-control"),
-                btn("priority-control"),
+                btn("priority-control low-priority").append(p("Low")).setAttr("tabindex", 1),
+                btn("priority-control medium-priority").append(p("Medium")).setAttr("tabindex", 2),
+                btn("priority-control high-priority").append(p("High")).setAttr("tabindex", 3),
             ),
             renderState: function() {
-                const secondRow = document.querySelector(".add-todo-container .todo-second-row");
+                const secondRow = document.querySelector(".add-todo-container .todo-first-row");
                 secondRow.append(this.container);
+                this.prompt.container.querySelector(".priority-control.low-priority").focus();
             },
         }
     );

@@ -525,9 +525,35 @@ input.add-todo-title {
   border: none;
 }
 
+.controls > .high-priority:focus-visible {
+  background-color: var(--high-priority-light);
+  border: 3px solid var(--high-priority-dark);
+  border-radius: 10px;
+  outline: none;
+}
+
+.controls > .medium-priority {
+  background-color: var(--medium-priority-light);
+  border: none;
+}
+
+.controls > .medium-priority:focus-visible {
+  background-color: var(--medium-priority-light);
+  border: 3px solid var(--medium-priority-dark);
+  border-radius: 10px;
+  outline: none;
+}
+
 .controls > .low-priority {
   background-color: var(--low-priority-light);
   border: none;
+}
+
+.controls > .low-priority:focus-visible {
+  background-color: var(--low-priority-light);
+  border: 3px solid var(--low-priority-dark);
+  border-radius: 10px;
+  outline: none;
 }
 
 input.high-priority {
@@ -602,4 +628,11 @@ label.add-todo-date {
   font-family: 'Baskervville';
   font-weight: normal;
   font-size: 22pt;
+}
+
+label.add-todo-priority {
+
+  font-size: 10pt;
+  font-weight: normal;
+  margin-left: calc(30px + 0.5rem + 2.5rem);
 }
