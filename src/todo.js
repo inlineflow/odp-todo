@@ -86,20 +86,29 @@ export class Todo extends Renderable {
     }
 }
 
-export const makeTitle = text => 
-        div("todo-title-container").append(
-            btn(`btn-complete-todo low-priority`).append(
+export const makeTitle = (text, disableCompleteTab=false) =>  {
+        const button = btn(`btn-complete-todo low-priority`).append(
                 icon(circleIcon, "circle-icon"),
             ).addHandler("click", function() {
             bus.emit("todo-completed", this);
-            }),
+            });
+
+        if(disableCompleteTab) {
+            button.setAttr("tabindex", -1);
+        }
+
+        const elem = div("todo-title-container").append(
+            button,
             // this.btnComplete.append(icon(circleIcon, "circle-icon")),// + " " + priorityClass)),
             h4(text, "title baskerville"),
             );
 
-export const makeFirstRow = (text, includeIcons=true) => {
+        return elem;
+}
+
+export const makeFirstRow = (text, {includeIcons=true, disableCompleteTab=false}) => {
     const elem = div("todo-first-row").append(
-        makeTitle(text));
+        makeTitle(text, disableCompleteTab));
         if (includeIcons) {
             elem.append(div("todo-icon-tray").append(
                 icon(pencilIcon, "pencil-icon"),

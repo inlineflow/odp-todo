@@ -32,7 +32,7 @@ export class AddTodo extends Renderable {
             title: "Title",
             inputClass: "add-todo-title",
             inputContainerClass: "add-todo-title-container",
-            renderResult: text => makeFirstRow(text, false),
+            renderResult: text => makeFirstRow(text, {includeIcons: false, disableCompleteTab: true}),
         },
         {
             title: "Due Date",
