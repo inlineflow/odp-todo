@@ -33,14 +33,14 @@ export class Project extends ContainedList {
             target.switchStateTo("form");
         });
 
-        bus.on("create-todo", ({src, title}) => {
-            if (!this.container.contains(src))
+        bus.on("create-todo", ({src: replace, data}) => {
+            if (!this.container.contains(replace))
                 return;
             
             
-            const todo = this.tf.new(title, new Date(), "high", []);
+            const todo = this.tf.new(title, data.dueDate, data.priority, []);
 
-            src.remove();
+            replace.remove();
             this.append(todo);
             const newAdd = new AddTodo();
             this.AddTodo = newAdd;

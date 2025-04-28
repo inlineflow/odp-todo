@@ -30,12 +30,14 @@ export class AddTodo extends Renderable {
         this.textField = {state: 'low-priority', htmlElement: input("title", "add-todo-title low-priority")};
         this.form = new Form({
             title: "Title",
+            tag: "title",
             inputClass: "add-todo-title",
             inputContainerClass: "add-todo-title-container",
             renderResult: text => makeFirstRow(text, {includeIcons: false, disableCompleteTab: true}),
         },
         {
             title: "Due Date",
+            tag: "dueDate",
             inputClass: "add-todo-date",
             inputContainerClass: "todo-date-container",
             wrapper: div("todo-second-row"),
@@ -43,6 +45,7 @@ export class AddTodo extends Renderable {
         },
         {
             title: "Priority",
+            tag: "priority",
             inputClass: "add-todo-priority",
             inputContainerClass: "todo-priority-container",
             renderResult: (newPriority) => {
@@ -52,15 +55,16 @@ export class AddTodo extends Renderable {
                 root.classList.replace("add-todo-container", "todo");
             },
             customPrompt: div("controls").append(
-                btn("priority-control low-priority").append(p("Low")).setAttr("tabindex", 1),
-                btn("priority-control medium-priority").append(p("Medium")).setAttr("tabindex", 2),
-                btn("priority-control high-priority").append(p("High")).setAttr("tabindex", 3),
+                btn("priority-control low-priority").append(p("Low")).setAttr("tabindex", 1).addCallback(() => "low"),
+                btn("priority-control medium-priority").append(p("Medium")).setAttr("tabindex", 2).addCallback(() => "medium"),
+                btn("priority-control high-priority").append(p("High")).setAttr("tabindex", 3).addCallback(() => "high"),
             ),
             renderState: function() {
                 const secondRow = document.querySelector(".add-todo-container .todo-first-row");
                 secondRow.append(this.container);
                 this.prompt.container.querySelector(".priority-control.low-priority").focus();
             },
+
         }
     );
 

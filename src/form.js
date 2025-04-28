@@ -7,6 +7,8 @@ export class Form extends Renderable {
     constructor(...states) {
         super();
         const s = states.flat(Infinity);
+        this.data = {};
+        
         this.states = s.map(elem => {
             // let container;
             const container = div(elem.inputContainerClass);
@@ -28,6 +30,17 @@ export class Form extends Renderable {
             if (elem.customPrompt === undefined) {
                 promptContainer.append(icon(arrowIcon, "prompt-icon"), promptInput);
             } else {
+                // console.log(elem.customPrompt);
+                // console.log(elem);
+                
+                
+                elem.customPrompt.childNodes.forEach(i => {
+                    i.addHandler("click", () => {
+                        this.data[elem.tag] = i.callback();
+                        console.log(this.data);
+                        bus.emit("create-todo", {replace: this.container, data: this.data})
+                    })
+                });
                 promptContainer.append(elem.customPrompt);
             }
             // promptContainer.append(
@@ -43,7 +56,9 @@ export class Form extends Renderable {
 
             const state =  {prompt: prompt, container: container, renderResult: elem.renderResult,
                     renderPrompt: this.renderState,
-                    wrapper: elem.wrapper,}
+                    wrapper: elem.wrapper,
+                    tag: elem.tag}
+
             state.renderPrompt = elem.renderState === undefined ? renderState : elem.renderState.bind(state);
             return state;
 
@@ -78,8 +93,12 @@ export class Form extends Renderable {
                 // this.nextState();
                 // const res = state.renderResult();               
                 // const parent = state.container.parentElement;
-                const todoTitle = state.prompt.input.value;
-                const res = state.renderResult(todoTitle);
+                
+                const value = state.prompt.input.value;
+                this.data[state.tag] = value;
+                console.log(state.tag);
+                console.log(this.data);
+                const res = state.renderResult(value);
                 state.container.replaceWith(res);                
                 const resParent = res.parentElement;
                 resParent.append(this.nextState().renderPrompt());
@@ -111,7 +130,7 @@ export class Form extends Renderable {
 
                 const val = state.prompt.input.value + e.key;
                 const words = val.split(" ");                
-                console.log(words);
+                // console.log(words);
                 
 
                 // for(const w of words) {

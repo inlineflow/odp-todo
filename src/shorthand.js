@@ -70,6 +70,11 @@ Element.prototype.addHandler = function(type, fn) {
     return this;
 }
 
+Element.prototype.addCallback = function(fn) {
+    this.callback = fn;
+    return this;
+}
+
 NodeList.prototype.contains = function(selector) {
     for(const i of this) {
         if(i.classList.contains(selector)) {
