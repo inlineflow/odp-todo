@@ -23,10 +23,14 @@ export class Project extends ContainedList {
             // console.log(target);
             // console.log(this);
             
-            const parent = target.closest('.project > ul > li');
-            if(parent && parent.childNodes.contains("todo")) {
-                parent.remove();
+            const container = target.closest('.project > ul > li');
+            if(container && container.childNodes.contains("todo")) {
+                container.remove();
             }
+
+            const parentTodo = target.closest('.todo');
+            const id = parentTodo.getAttribute('todo-id');
+            this.children = this.children.filter(el => el.id !== id);
 
             bus.emit("save-project-list");
         });

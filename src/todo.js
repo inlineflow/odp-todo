@@ -48,6 +48,8 @@ export class Todo extends Renderable {
      */
     constructor(title, dueDate, priority, notes, formatter=formatDistance) {
         super(div("todo"));
+        this.id = crypto.randomUUID();
+        this.container.setAttr("todo-id", this.id);
         this.title = title;
         this.dueDate = dueDate;
         this.priority = priority;
