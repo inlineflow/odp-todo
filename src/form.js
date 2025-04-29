@@ -1,6 +1,7 @@
 import { Renderable } from "./renderable";
 import { div, icon, input, label } from "./shorthand";
 import arrowIcon from "../assets/icons/arrow.svg"
+import bus from "./event-bus";
 
 export class Form extends Renderable {
 
@@ -38,7 +39,7 @@ export class Form extends Renderable {
                     i.addHandler("click", () => {
                         this.data[elem.tag] = i.callback();
                         console.log(this.data);
-                        bus.emit("create-todo", {replace: this.container, data: this.data})
+                        bus.emit("create-todo", {replace: container, data: this.data})
                     })
                 });
                 promptContainer.append(elem.customPrompt);

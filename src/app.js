@@ -14,8 +14,7 @@ export class App extends Renderable {
             // e.stopPropagation();
         });
     }
-    /** @type {HTMLElement[]} */
-    notifyOnClick = [];
+    
     renderChildren = this.render;
     render = function() {
         let tree = this.renderChildren();

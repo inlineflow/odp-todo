@@ -3,7 +3,7 @@ import { ContainedList, Renderable } from "./renderable";
 import { btn, div, form, h3, h4, icon, input, p } from "./shorthand";
 import { Todo, TodoFactory } from "./todo";
 import bus from "./event-bus";
-import { formatDistance } from "date-fns";
+import { formatDistance, parse } from "date-fns";
 
 export class Project extends ContainedList {
     /**
@@ -14,7 +14,7 @@ export class Project extends ContainedList {
         super(todos, title, "project", "project-todos");
         this.AddTodo = new AddTodo();
         this.btnAddTodo = this.AddTodo.render();
-        this.append(this.btnAddTodo);
+        this.append(this.AddTodo);
         this.tf = new TodoFactory(formatDistance);
         // this.container = div(this.classlist);
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
@@ -33,19 +33,27 @@ export class Project extends ContainedList {
             target.switchStateTo("form");
         });
 
-        bus.on("create-todo", ({src: replace, data}) => {
+        bus.on("create-todo", ({replace, data}) => {
             if (!this.container.contains(replace))
                 return;
+            const container = replace.closest(".add-todo-container").parentElement;
+            if (!container) {
+                console.log("Can't find add-todo-container");
+                return;
+            }
             
-            
-            const todo = this.tf.new(title, data.dueDate, data.priority, []);
+            const date = parse(data.dueDate, "dd/MM/yyyy", new Date()) 
+            const todo = this.tf.new(data.title, date, data.priority, []);
 
-            replace.remove();
+            // replace.remove();
+            container.remove();
             this.append(todo);
             const newAdd = new AddTodo();
             this.AddTodo = newAdd;
             this.btnAddTodo = this.AddTodo.render();
             this.append(this.btnAddTodo);
+            console.log(JSON.stringify(todo));
+            
         });
 
     }

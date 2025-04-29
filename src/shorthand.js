@@ -100,6 +100,7 @@ export const section = classlist => document.createElement("section").addClass(c
  * @returns 
  */
 export const p = (text, classList) => document.createElement("p").setText(text).addClass(classList);
+export const a = (text, href) => document.createElement("a").setText(text).setAttr("href", href);
 export const span = (text, classList) => document.createElement("span").setText(text).addClass(classList);
 export const h4 = (text, classlist) => document.createElement("h4").setText(text).addClass(classlist);
 export const h3 = (text, classlist) => document.createElement("h3").setText(text).addClass(classlist);
