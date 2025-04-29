@@ -52,6 +52,7 @@ export class ContainedList extends Renderable {
         this.title = title;
         this.ul = ul(["no-bullet", "contained-list"], elements);
         this.ul.addClass(ulClass);
+        this.children = elements;
     }
 
     render = function () {
@@ -60,6 +61,8 @@ export class ContainedList extends Renderable {
     }
 
     append = function (...items) {
+        this.addChildren(...items);
+
         for (let i of items) {
             this.ul.append(
                 parseLi(i),

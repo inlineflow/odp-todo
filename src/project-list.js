@@ -12,4 +12,17 @@ export class ProjectList extends Renderable {
             h2(this.title, "project-list-title"),
         )
     }
+
+    toJSON() { 
+        const title = this.title;
+        const children = [];
+
+        this.children.forEach(ch => {
+            if (ch.toJSON) {
+                children.push(ch.toJSON());
+            }
+        })
+
+        return {title, children};
+    }
 }

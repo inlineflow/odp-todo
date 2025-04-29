@@ -59,5 +59,17 @@ export class Project extends ContainedList {
     }
 
     toHtml() { return this.container.append(h3(this.title));}
+    toJSON() { 
+        const title = this.title;
+        const children = [];
+
+        this.children.forEach(ch => {
+            if (ch.toJSON) {
+                children.push(ch.toJSON());
+            }
+        })
+
+        return {title, children};
+    }
 
 }

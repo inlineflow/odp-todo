@@ -84,6 +84,14 @@ export class Todo extends Renderable {
 
         return elem;
     }
+
+    toJSON() {
+        const title = this.title;
+        const dueDate = this.dueDate;
+        const priority = this.priority;
+        const res = {title, dueDate, priority};
+        return res;
+    }
 }
 
 export const makeTitle = (text, disableCompleteTab=false) =>  {
