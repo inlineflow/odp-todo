@@ -20,13 +20,15 @@ export class Project extends ContainedList {
         this.btnComplete = btn(`btn-complete-todo ${this.priority}-priority`);
         // TODO: refactor to use event bus
         bus.on("todo-completed", (target) => {
-            console.log(target);
-            console.log(this);
+            // console.log(target);
+            // console.log(this);
             
             const parent = target.closest('.project > ul > li');
             if(parent && parent.childNodes.contains("todo")) {
                 parent.remove();
             }
+
+            bus.emit("save-project-list");
         });
 
         bus.on("add-todo", (target) => {
@@ -52,7 +54,8 @@ export class Project extends ContainedList {
             this.AddTodo = newAdd;
             this.btnAddTodo = this.AddTodo.render();
             this.append(this.btnAddTodo);
-            console.log(JSON.stringify(todo));
+            // console.log(JSON.stringify(todo));
+            bus.emit("save-project-list");
             
         });
 
@@ -61,15 +64,18 @@ export class Project extends ContainedList {
     toHtml() { return this.container.append(h3(this.title));}
     toJSON() { 
         const title = this.title;
-        const children = [];
-
-        this.children.forEach(ch => {
-            if (ch.toJSON) {
-                children.push(ch.toJSON());
-            }
-        })
-
+        const children = this.children.filter(el => el instanceof Todo);
         return {title, children};
+        // const title = this.title;
+        // const children = [];
+
+        // this.children.forEach(ch => {
+        //     if (ch.toJSON) {
+        //         children.push(ch.toJSON());
+        //     }
+        // })
+
+        // return JSON.stringify({title, children});
     }
 
 }
