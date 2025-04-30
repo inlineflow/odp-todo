@@ -7,11 +7,11 @@ const makeLinks = function(items) {
     for (const i of items) {
         if (typeof i === 'string') {
             const obj = {}
-            obj.toHtml = function() {
+            obj.tomarkup = function() {
                 return a(i, "#");
             }
             obj.render = function() {
-                return this.toHtml();
+                return this.tomarkup();
             }
             result.push(obj);
         } else {
@@ -31,16 +31,17 @@ export class Sidebar extends ContainedList {
         const map = {}
         for(const key in navItems) {
             const value = navItems[key];
+            const markup = value['markup'];
             // console.log(key, navItems[key]);
-            if (typeof value['html'] === 'string') {
-                map[key] = new NavItem(value['html'], []);
+            if (typeof markup === 'string') {
+                map[key] = new NavItem(markup, []);
                 // return new NavItem(item, []);
             } else {
-                map[key] = value['html'];
+                map[key] = markup;
                 // return item;
             }
         }
-        console.log(map);
+        // console.log(map);
         
         // const i = Array.from(navItems, (item) => {
         //     if (typeof item === 'string') {

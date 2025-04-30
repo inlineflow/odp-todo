@@ -31,10 +31,10 @@ const project2 = new Project("My Project2", todos2);
 let pList = new ProjectList("Today", project, project2);
 const defaultApp = new App();
 const sidebar = new Sidebar( {
-    "user-profile": {html: new UserProfile("Morris"), render: () => console.log("WIP")},
-    "my-projects": {html: "My Projects", render: () => console.log("WIP")},
-    "today": {html: "Today", render: () => console.log("WIP")},
-    "upcoming": {html: "Upcoming", render: () => console.log("WIP")},
+    "user-profile": {markup: new UserProfile("Morris"), render: () => console.log("WIP")},
+    "my-projects": {markup: "My Projects", render: () => console.log("WIP")},
+    "today": {markup: "Today", render: () => console.log("WIP")},
+    "upcoming": {markup: "Upcoming", render: () => console.log("WIP")},
 },
 );
 
