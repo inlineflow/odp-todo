@@ -32,11 +32,11 @@ export class Sidebar extends ContainedList {
         for(const key in navItems) {
             const value = navItems[key];
             // console.log(key, navItems[key]);
-            if (typeof value === 'string') {
-                map[key] = new NavItem(value, []);
+            if (typeof value['html'] === 'string') {
+                map[key] = new NavItem(value['html'], []);
                 // return new NavItem(item, []);
             } else {
-                map[key] = value;
+                map[key] = value['html'];
                 // return item;
             }
         }
