@@ -44,6 +44,9 @@ export class Renderable {
     }
     render = render;
     addChildren = addChildren;
+    toHtml() {
+        return this.container;
+    }
 }
 
 export class ContainedList extends Renderable {
