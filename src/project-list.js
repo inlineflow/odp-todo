@@ -43,7 +43,7 @@ export function parseProjectList(json) {
     const obj = JSON.parse(json)
     const projects = Array.from(obj.children, proj => {
         const todos = Array.from(proj.children, todo => new Todo(todo.title, todo.dueDate, todo.priority, [], formatDistance));
-        return new Project(proj.title, todos);
+        return new Project(proj.title, todos, proj.opts);
     })
     return new ProjectList(obj.title, ...projects);
     // /**

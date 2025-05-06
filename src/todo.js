@@ -7,6 +7,7 @@ import commentIcon from "../assets/icons/comment.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import { formatDistance } from 'date-fns'
 import bus from "./event-bus";
+import {todoRepo} from "./repos";
 
 /**
  * @typedef {Object} Todo
@@ -36,7 +37,11 @@ export class TodoFactory {
      * @param {"low" | "medium" | "high"} priority
      * @param {string[]} notes
      */
-    new = (...args) => new Todo(...args, this.formatter);
+    new = (...args) =>{
+        const todo = new Todo(...args, this.formatter);
+        todoRepo.push(todo);
+        return todo;
+    }
 }
 
 export class Todo extends Renderable {

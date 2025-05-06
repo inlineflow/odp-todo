@@ -1,39 +1,48 @@
 import { Todo, TodoFactory } from "./todo";
 import "./styles.css";
-import { Project } from "./project";
+import { Project, ProjectFactory } from "./project";
 import { parseProjectList, ProjectList } from "./project-list";
 import { Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { formatDistance } from "date-fns";
 import { App } from "./app";
 import sm from "./save";
+import {projectRepo, todoRepo} from "./repos";
 
+window.todoRepo = todoRepo;
+window.projectRepo = projectRepo;
 const tf = new TodoFactory(formatDistance);
+const pf = new ProjectFactory();
 const x = tf.new("Titlus",  new Date(2025, 3, 15), "medium", "notes");
 
 const todos = [
-    new Todo("Order a Burger at Nando's for lunch", new Date(2025, 3, 15) , "high", ""), 
+    tf.new("Order a Burger at Nando's for lunch", new Date(2025, 3, 15) , "high", ""), 
     x,
-    new Todo("title",  new Date(2025, 3, 15), "low", "notes"),
+    tf.new("title",  new Date(2025, 3, 15), "low", "notes"),
 ];
 
 
-const project = new Project("My Project", todos);
+const project = pf.new("My Project", todos, {allowDelete: true});
 
 const todos2 = [
-    new Todo("MyTodo", new Date(2025, 3, 15), "low", "notes"), 
-    new Todo("MyTodo", new Date(2025, 3, 15), "high", "notes"),
-    new Todo("MyTodo", new Date(2025, 3, 15), "medium", "notes"),
+    tf.new ("MyTodo", new Date(2025, 3, 15), "low", "notes"), 
+    tf.new ("MyTodo", new Date(2025, 3, 15), "high", "notes"),
+    tf.new ("MyTodo", new Date(2025, 3, 15), "medium", "notes"),
 ];
 
 
-const project2 = new Project("My Project2", todos2);
-let pList = new ProjectList("Today", project, project2);
+const project2 = pf.new("My Project2", todos2);
+const project3 = pf.new("All Today", [tf.new("ToToDo", new Date(), "high", "notes")])
+let pList = new ProjectList("Today", project, project2, project3);
+window.pList = pList;
 const defaultApp = new App();
 const sidebar = new Sidebar( {
-    "user-profile": {markup: new UserProfile("Morris"), render: () => console.log("WIP")},
-    "my-projects": {markup: "My Projects", render: () => console.log("WIP")},
-    "today": {markup: "Today", render: () => console.log("WIP")},
+    "user-profile": {markup: new UserProfile("Morris"), pList: () => {}},
+    "my-projects": {markup: "My Projects", pList: () => new ProjectList("My Projects", projectRepo)},
+    "today": {markup: "Today", pList: () => {
+        const projects = projectRepo.filter(el => el.todos.every(todo => todo.dueDate === new Date()));
+        return projects;
+    }},
     "upcoming": {markup: "Upcoming", render: () => console.log("WIP")},
 },
 );
