@@ -14,6 +14,7 @@ export class ProjectList extends Renderable {
         bus.on("save-project-list", () => {
             const todos = this.projects.flatMap(p => p.todos);
             const todosJSON = JSON.stringify(todos);
+            const projects = this.projects.filter(p => p.opts.allowSave);
 
             sm.save("todos", todosJSON);
         });

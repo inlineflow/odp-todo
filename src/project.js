@@ -101,16 +101,6 @@ export class Project extends ContainedList {
         const title = this.title;
         const children = this.children.filter(el => el instanceof Todo);
         return { title, children };
-        // const title = this.title;
-        // const children = [];
-
-        // this.children.forEach(ch => {
-        //     if (ch.toJSON) {
-        //         children.push(ch.toJSON());
-        //     }
-        // })
-
-        // return JSON.stringify({title, children});
     }
 
 }

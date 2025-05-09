@@ -5,6 +5,5 @@ import { makeDefaultPList } from "./defaultProjectList";
 
 window.todoRepo = () => todoRepo;
 window.projectRepo = () => projectRepo;
-let pList = makeDefaultPList()
-const defaultApp = new App({ currentProjectList: pList });
+const defaultApp = new App();
 defaultApp.render();

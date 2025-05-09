@@ -6,14 +6,17 @@ import { makeSidebar, Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
 import { parseProjectList } from "./project-list";
 import sm from "./save";
-import { projectRepo } from "./repos";
+import { initRepos, projectRepo } from "./repos";
+import { makeDefaultPList } from "./defaultProjectList";
 
 
 export class App extends Renderable {
-    constructor({ currentProjectList }) {
+    constructor() {
         super(div("app"));
+        initRepos()
+        const pList = makeDefaultPList()
         this.sidebar = makeSidebar();
-        this.currentProjectList = currentProjectList;
+        this.currentProjectList = pList;
         //const parsed = parseProjectList(sm.load("Today"))
         //this.currentProjectList = this.sidebar.getProjectList("today");
         this.addChildren(this.sidebar, this.currentProjectList);
