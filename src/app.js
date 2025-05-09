@@ -4,14 +4,18 @@ import { Renderable } from "./renderable";
 import { div } from "./shorthand";
 import { makeSidebar, Sidebar } from "./sidebar";
 import { UserProfile } from "./userProfile";
+import { parseProjectList } from "./project-list";
+import sm from "./save";
+import { projectRepo } from "./repos";
 
 
 export class App extends Renderable {
     constructor({ currentProjectList }) {
         super(div("app"));
         this.sidebar = makeSidebar();
-        //this.currentProjectList = currentProjectList;
-        this.currentProjectList = this.sidebar.getProjectList("today");
+        this.currentProjectList = currentProjectList;
+        //const parsed = parseProjectList(sm.load("Today"))
+        //this.currentProjectList = this.sidebar.getProjectList("today");
         this.addChildren(this.sidebar, this.currentProjectList);
         this.container.addEventListener("click", (e) => {
             // setTimeout(() => {
