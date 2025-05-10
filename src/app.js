@@ -11,30 +11,37 @@ import { makeDefaultPList } from "./defaultProjectList";
 
 
 export class App extends Renderable {
-    constructor() {
-        super(div("app"));
-        initRepos()
-        const pList = makeDefaultPList()
-        this.sidebar = makeSidebar();
-        this.currentProjectList = pList;
-        //const parsed = parseProjectList(sm.load("Today"))
-        //this.currentProjectList = this.sidebar.getProjectList("today");
-        this.addChildren(this.sidebar, this.currentProjectList);
-        this.container.addEventListener("click", (e) => {
-            // setTimeout(() => {
-            bus.emit("root-clicked", e.target);
-            e.stopImmediatePropagation();
-            // }, 200);
-            // e.stopPropagation();
-        });
-    }
+  constructor() {
+    super(div("app"));
+    initRepos()
+    const pList = makeDefaultPList()
+    this.sidebar = makeSidebar();
+    this.currentProjectList = pList;
+    //const parsed = parseProjectList(sm.load("Today"))
+    //this.currentProjectList = this.sidebar.getProjectList("today");
+    this.addChildren(this.sidebar, this.currentProjectList);
+    this.container.addEventListener("click", (e) => {
+      // setTimeout(() => {
+      bus.emit("root-clicked", e.target);
+      e.stopImmediatePropagation();
+      // }, 200);
+      // e.stopPropagation();
+    });
 
-    renderChildren = this.render;
-    render = function() {
-        let tree = this.renderChildren();
-        document.body.append(tree);
+    bus.on("navigation", data => {
+      const currentPList = this.container.querySelector('.project-list');
+      currentPList.replaceWith(data.container);
+      //console.log(data);
 
-    }
+    });
+  }
 
-    toHtml = () => this.container;
+  renderChildren = this.render;
+  render = function() {
+    let tree = this.renderChildren();
+    document.body.append(tree);
+
+  }
+
+  toHtml = () => this.container;
 }

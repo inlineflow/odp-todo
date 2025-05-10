@@ -7,41 +7,43 @@ import { Project } from "./project";
 import { Todo, TodoFactory } from "./todo";
 
 export class ProjectList extends Renderable {
-    constructor(title, ...projects) {
-        super(section("project-list"), projects);
-        this.projects = projects;
-        this.title = title;
-        bus.on("save-project-list", () => {
-            const todos = this.projects.flatMap(p => p.todos);
-            const todosJSON = JSON.stringify(todos);
-            const projects = this.projects.filter(p => p.opts.allowSave);
+  constructor(title, ...projects) {
+    super(section("project-list"), projects);
+    this.projects = projects;
+    this.title = title;
+    bus.on("save-project-list", () => {
+      const todos = this.projects.flatMap(p => p.todos);
+      const todosJSON = JSON.stringify(todos);
+      const projects = this.projects.filter(p => p.opts.allowSave && !p.opts.synthetic);
+      const projectsJSON = JSON.stringify(projects);
 
-            sm.save("todos", todosJSON);
-        });
-    }
+      sm.save("todos", todosJSON);
+      sm.save("projects", projectsJSON);
+    });
+  }
 
-    toHtml() {
-        return this.container.append(
-            h2(this.title, "project-list-title"),
-        )
-    }
+  toHtml() {
+    return this.container.append(
+      h2(this.title, "project-list-title"),
+    )
+  }
 
-    toJSON() {
-        const title = this.title;
-        const children = this.children;
-        return { title, children };
-        // const title = this.title;
-        // const children = [];
+  toJSON() {
+    const title = this.title;
+    const children = this.children;
+    return { title, children };
+    // const title = this.title;
+    // const children = [];
 
-        // this.children.forEach(ch => {
-        //     if (ch.toJSON) {
-        //         children.push(ch.toJSON());
-        //     }
-        // })
+    // this.children.forEach(ch => {
+    //     if (ch.toJSON) {
+    //         children.push(ch.toJSON());
+    //     }
+    // })
 
-        // return JSON.stringify({title, children});
-        // return {title, children};
-    }
+    // return JSON.stringify({title, children});
+    // return {title, children};
+  }
 }
 
 //export function parseProjectList(json) {
